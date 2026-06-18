@@ -3,7 +3,9 @@ title: "AI辅助解决弹道复现BUG"
 slug: "ai辅助解决弹道复现bug"
 date: 2026-06-06T16:10:11+08:00
 draft: false
-tags: []
+tags:
+  - "AI"
+categories: []
 ---
 
 # AI辅助解决弹道复现BUG

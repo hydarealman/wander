@@ -3,7 +3,10 @@ title: "Linux操作系统"
 slug: "linux操作系统"
 date: 2026-06-06T16:13:50+08:00
 draft: false
-tags: []
+tags:
+  - "工具"
+categories:
+  - "编程开发"
 ---
 
 # Linux操作系统

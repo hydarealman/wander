@@ -1,0 +1,14 @@
+# 置顶文章配置。weight 越小越靠前。
+# path 使用 D:\notes 下的相对路径，和 content/posts 中的文件名通常一致。
+
+[[posts]]
+path = "ai使用指南.md"
+weight = 1
+
+[[posts]]
+path = "Git分布式版本控制工具.md"
+weight = 2
+
+[[posts]]
+path = "lab技术栈.md"
+weight = 3

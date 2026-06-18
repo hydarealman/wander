@@ -3,7 +3,10 @@ title: "MPC"
 slug: "mpc"
 date: 2026-06-06T16:10:42+08:00
 draft: false
-tags: []
+tags:
+  - "算法"
+categories:
+  - "算法数学"
 ---
 
 # MPC

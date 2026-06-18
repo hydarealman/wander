@@ -3,7 +3,10 @@ title: "SLAM"
 slug: "slam"
 date: 2026-06-06T16:08:23+08:00
 draft: false
-tags: []
+tags:
+  - "ROS"
+categories:
+  - "机器人视觉"
 ---
 
 # SLAM

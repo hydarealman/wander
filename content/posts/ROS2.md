@@ -3,7 +3,10 @@ title: "ROS2"
 slug: "ros2"
 date: 2026-06-06T16:03:32+08:00
 draft: false
-tags: []
+tags:
+  - "ROS"
+categories:
+  - "机器人视觉"
 ---
 
 # ROS2

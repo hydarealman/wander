@@ -2,5 +2,7 @@ public/
 resources/_gen/
 .hugo_build.lock
 hugo-server*.log
+__pycache__/
+*.pyc
 .DS_Store
 Thumbs.db

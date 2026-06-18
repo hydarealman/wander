@@ -3,7 +3,11 @@ title: "rust仿真环境配置: wsl \\+ ros2 \\+ rust"
 slug: "rust仿真环境配置_-wsl-+-ros2-+-rust"
 date: 2026-06-06T16:15:30+08:00
 draft: false
-tags: []
+tags:
+  - "ROS"
+categories:
+  - "机器人视觉"
+  - "编程开发"
 ---
 
 # rust仿真环境配置: wsl \+ ros2 \+ rust

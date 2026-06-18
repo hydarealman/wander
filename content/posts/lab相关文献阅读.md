@@ -3,7 +3,10 @@ title: "lab相关文献阅读"
 slug: "lab相关文献阅读"
 date: 2026-06-06T16:14:39+08:00
 draft: false
-tags: []
+tags:
+  - "读书"
+categories:
+  - "学习记录"
 ---
 
 # lab相关文献阅读

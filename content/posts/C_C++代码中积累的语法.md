@@ -3,7 +3,10 @@ title: "C/C\\+\\+代码中积累的语法"
 slug: "c_c++代码中积累的语法"
 date: 2026-06-06T16:03:22+08:00
 draft: false
-tags: []
+tags:
+  - "C/C++"
+categories:
+  - "编程开发"
 ---
 
 # C/C\+\+代码中积累的语法

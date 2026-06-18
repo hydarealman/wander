@@ -4,6 +4,7 @@ slug: "opencv知识库-整理"
 date: 2026-06-06T16:05:04+08:00
 draft: false
 tags: []
+categories: []
 ---
 
 # opencv知识库\-\-\-整理

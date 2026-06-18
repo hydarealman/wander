@@ -3,7 +3,12 @@ title: "Git分布式版本控制工具"
 slug: "git分布式版本控制工具"
 date: 2026-06-06T16:07:58+08:00
 draft: false
-tags: []
+pinned: true
+weight: 2
+tags:
+  - "工具"
+categories:
+  - "编程开发"
 ---
 
 # Git分布式版本控制工具

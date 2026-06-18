@@ -3,7 +3,9 @@ title: "xv6 for RISC\\-V"
 slug: "xv6-for-risc-v"
 date: 2026-06-06T16:10:22+08:00
 draft: false
-tags: []
+tags:
+  - "读书"
+categories: []
 ---
 
 # xv6 for RISC\-V

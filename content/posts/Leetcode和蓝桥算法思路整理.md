@@ -3,7 +3,10 @@ title: "Leetcode和蓝桥算法思路整理"
 slug: "leetcode和蓝桥算法思路整理"
 date: 2026-06-06T16:05:32+08:00
 draft: false
-tags: []
+tags:
+  - "算法"
+categories:
+  - "算法数学"
 ---
 
 # Leetcode和蓝桥算法思路整理

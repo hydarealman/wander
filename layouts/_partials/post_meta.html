@@ -1,0 +1,35 @@
+{{- $scratch := newScratch }}
+
+{{- if (.Param "pinned") -}}
+    {{- $scratch.Add "meta" (slice "<span class='meta-pin'>置顶</span>") }}
+{{- end }}
+
+{{- if not .Date.IsZero -}}
+    {{- $scratch.Add "meta" (slice (printf "<span title='%s'>%s</span>" (.Date) (.Date | time.Format (default ":date_long" site.Params.DateFormat)))) }}
+{{- end }}
+
+{{- if (.Param "ShowReadingTime") -}}
+    {{- $scratch.Add "meta" (slice (printf "<span>%s</span>" (i18n "read_time" .ReadingTime | default (printf "%d min" .ReadingTime)))) }}
+{{- end }}
+
+{{- if (.Param "ShowWordCount") -}}
+    {{- $scratch.Add "meta" (slice (printf "<span>%s</span>" (i18n "words" .WordCount | default (printf "%d words" .WordCount)))) }}
+{{- end }}
+
+{{- with (.GetTerms "categories") -}}
+    {{- $cats := slice -}}
+    {{- range . -}}
+        {{- $cats = $cats | append (printf "<a href='%s'>%s</a>" .RelPermalink .LinkTitle) -}}
+    {{- end -}}
+    {{- $scratch.Add "meta" (slice (printf "<span class='meta-cats'>%s</span>" (delimit $cats " / "))) }}
+{{- end }}
+
+{{- if not (.Param "hideAuthor") -}}
+    {{- with (partial "author.html" .) }}
+        {{- $scratch.Add "meta" (slice (printf "<span>%s</span>" .)) }}
+    {{- end }}
+{{- end }}
+
+{{- with ($scratch.Get "meta") }}
+    {{- delimit . "&nbsp;·&nbsp;" | safeHTML -}}
+{{- end -}}

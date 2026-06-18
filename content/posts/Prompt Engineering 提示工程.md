@@ -3,7 +3,9 @@ title: "Prompt Engineering 提示工程"
 slug: "prompt-engineering-提示工程"
 date: 2026-06-06T16:11:04+08:00
 draft: false
-tags: []
+tags:
+  - "AI"
+categories: []
 ---
 
 # Prompt Engineering 提示工程

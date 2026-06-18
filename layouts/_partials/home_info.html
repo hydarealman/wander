@@ -1,0 +1,51 @@
+{{- $posts := where site.RegularPages "Type" "in" site.Params.mainSections -}}
+{{- $pinned := first 4 (sort (where $posts "Params.pinned" true) "Weight" "asc") -}}
+{{- $tags := site.Taxonomies.tags -}}
+{{- $categories := site.Taxonomies.categories -}}
+{{- $words := 0 -}}
+{{- range $posts }}{{- $words = add $words .WordCount -}}{{- end -}}
+
+{{- with site.Params.homeInfoParams }}
+<article class="first-entry home-info wander-home">
+    <div class="wander-kicker">Personal Knowledge Base</div>
+    <header class="entry-header">
+        <h1>{{ .Title | markdownify }}</h1>
+    </header>
+    <div class="entry-content md-content">
+        {{ $opts := dict "display" "block" }}
+        {{ .Content | $.Page.RenderString $opts }}
+    </div>
+
+    <div class="wander-actions" aria-label="站点快捷入口">
+        <a href="{{ "posts/" | relURL }}">全部文章</a>
+        <a href="{{ "archives/" | relURL }}">时间归档</a>
+        <a href="{{ "tags/" | relURL }}">标签索引</a>
+        <a href="{{ "search/" | relURL }}">站内搜索</a>
+    </div>
+
+    <div class="wander-stats" aria-label="站点统计">
+        <span><strong>{{ len $posts }}</strong> 篇文章</span>
+        <span><strong>{{ len $tags }}</strong> 个标签</span>
+        <span><strong>{{ len $categories }}</strong> 个分类</span>
+        <span><strong>{{ div $words 1000 }}</strong>k 字</span>
+    </div>
+
+    {{- if $pinned }}
+    <section class="wander-pinned" aria-label="置顶文章">
+        <h2>置顶</h2>
+        <div class="wander-pinned-list">
+            {{- range $pinned }}
+            <a href="{{ .Permalink }}">
+                <span>{{ .Title }}</span>
+                <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>
+            </a>
+            {{- end }}
+        </div>
+    </section>
+    {{- end }}
+
+    <footer class="entry-footer">
+        {{ partial "social_icons.html" (dict "align" site.Params.homeInfoParams.AlignSocialIconsTo) }}
+    </footer>
+</article>
+{{- end -}}

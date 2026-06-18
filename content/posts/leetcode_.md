@@ -3,7 +3,10 @@ title: "leetcode"
 slug: "leetcode_"
 date: 2026-06-06T16:02:11+08:00
 draft: false
-tags: []
+tags:
+  - "算法"
+categories:
+  - "算法数学"
 ---
 
 # leetcode

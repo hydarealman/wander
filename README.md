@@ -33,6 +33,20 @@ python .\scripts\import_notes.py
 
 脚本会递归扫描 `D:\notes` 下的 `.md` 文件，保留目录结构，生成 YAML front matter，并写入 `D:\wander\content\posts`。
 
+## 置顶文章
+
+置顶规则放在 `data/pinned_posts.toml`，也可以用脚本管理：
+
+```powershell
+cd D:\wander
+python .\scripts\pin_post.py list
+python .\scripts\pin_post.py add "ROS2.md" 1
+python .\scripts\pin_post.py remove "ai使用指南.md"
+python .\scripts\import_notes.py
+```
+
+`weight` 越小越靠前。重新导入后，脚本会自动把 `pinned: true` 和 `weight` 写入文章 front matter。
+
 ## 本地预览
 
 ```powershell

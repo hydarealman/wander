@@ -1,17 +1,37 @@
 from pathlib import Path
 from datetime import datetime
 import re
+import tomllib
 
 
 SOURCE_DIR = Path(r"D:\notes")
 DEST_DIR = Path(r"D:\wander\content\posts")
 STATIC_MEDIA_DIR = Path(r"D:\wander\static\media")
+PINNED_POSTS_FILE = Path(r"D:\wander\data\pinned_posts.toml")
 
 FRONT_MATTER_RE = re.compile(r"\A(?:---|\+\+\+)\s*\n.*?\n(?:---|\+\+\+)\s*\n?", re.S)
 HEADING_RE = re.compile(r"^\s*#\s+(.+?)\s*#*\s*$", re.M)
 LEADING_HTML_COMMENT_RE = re.compile(r"\A\s*<!--.*?-->\s*", re.S)
 MARKDOWN_IMAGE_RE = re.compile(r"!\[([^\]]*)\]\(([^)]+)\)")
 IMAGE_EXTENSIONS = {".png", ".jpg", ".jpeg", ".gif", ".webp", ".svg", ".bmp"}
+
+TAG_RULES = [
+    ("AI", ["ai", "prompt", "openvino", "openvino", "大模型"]),
+    ("C/C++", ["c++", "c_c++", "cpp"]),
+    ("ROS", ["ros1", "ros2", "slam"]),
+    ("机器人", ["自瞄", "视觉", "stm32", "嵌入式", "导航", "相机", "三维", "点云"]),
+    ("算法", ["leetcode", "蓝桥", "kalman", "mpc", "数学建模"]),
+    ("工具", ["git", "docker", "linux", "vscode", "tmux", "sql", "技术栈"]),
+    ("读书", ["文献", "阅读", "深入理解计算机系统", "xv6"]),
+    ("复盘", ["复盘", "备赛", "赛季", "汇报"]),
+]
+
+CATEGORY_RULES = [
+    ("机器人视觉", ["自瞄", "视觉", "相机", "三维", "点云", "slam", "stm32", "ros"]),
+    ("编程开发", ["c++", "git", "docker", "linux", "vscode", "sql", "rust", "前后端"]),
+    ("算法数学", ["leetcode", "蓝桥", "kalman", "mpc", "数学建模"]),
+    ("学习记录", ["文献", "阅读", "培训", "指南", "复盘", "计划", "汇报", "技术栈"]),
+]
 
 
 def read_text(path: Path) -> str:
@@ -54,6 +74,42 @@ def tags_from_relative_path(relative_path: Path) -> list[str]:
         if tag and tag not in tags:
             tags.append(tag)
     return tags
+
+
+def keyword_text(relative_path: Path, title: str) -> str:
+    return f"{relative_path.as_posix()} {title}".lower()
+
+
+def infer_terms(relative_path: Path, title: str, rules: list[tuple[str, list[str]]]) -> list[str]:
+    haystack = keyword_text(relative_path, title)
+    terms = []
+    for term, keywords in rules:
+        if any(keyword.lower() in haystack for keyword in keywords):
+            terms.append(term)
+    return terms
+
+
+def merge_unique(*groups: list[str]) -> list[str]:
+    values = []
+    for group in groups:
+        for item in group:
+            if item and item not in values:
+                values.append(item)
+    return values
+
+
+def load_pinned_posts() -> dict[str, int]:
+    if not PINNED_POSTS_FILE.exists():
+        return {}
+
+    data = tomllib.loads(PINNED_POSTS_FILE.read_text(encoding="utf-8"))
+    pinned = {}
+    for item in data.get("posts", []):
+        path = str(item.get("path", "")).replace("\\", "/").strip()
+        weight = int(item.get("weight", 100))
+        if path:
+            pinned[path] = weight
+    return pinned
 
 
 def slug_from_relative_path(relative_path: Path) -> str:
@@ -127,11 +183,13 @@ def rewrite_local_image_links(markdown_path: Path, relative_markdown_path: Path,
     return MARKDOWN_IMAGE_RE.sub(replace, text), copied, remote
 
 
-def front_matter(path: Path, relative_path: Path, text: str) -> str:
+def front_matter(path: Path, relative_path: Path, text: str, pinned_posts: dict[str, int]) -> str:
     modified = datetime.fromtimestamp(path.stat().st_mtime).astimezone()
     date = modified.isoformat(timespec="seconds")
     title = extract_title(path, text)
-    tags = tags_from_relative_path(relative_path)
+    tags = merge_unique(tags_from_relative_path(relative_path), infer_terms(relative_path, title, TAG_RULES))
+    categories = infer_terms(relative_path, title, CATEGORY_RULES)
+    pinned_weight = pinned_posts.get(relative_path.as_posix())
 
     lines = [
         "---",
@@ -141,6 +199,12 @@ def front_matter(path: Path, relative_path: Path, text: str) -> str:
         "draft: false",
     ]
 
+    if pinned_weight is not None:
+        lines.extend([
+            "pinned: true",
+            f"weight: {pinned_weight}",
+        ])
+
     if tags:
         lines.append("tags:")
         for tag in tags:
@@ -148,11 +212,18 @@ def front_matter(path: Path, relative_path: Path, text: str) -> str:
     else:
         lines.append("tags: []")
 
+    if categories:
+        lines.append("categories:")
+        for category in categories:
+            lines.append(f"  - {yaml_quote(category)}")
+    else:
+        lines.append("categories: []")
+
     lines.append("---")
     return "\n".join(lines) + "\n\n"
 
 
-def import_file(path: Path) -> Path:
+def import_file(path: Path, pinned_posts: dict[str, int]) -> Path:
     relative_path = path.relative_to(SOURCE_DIR)
     destination = DEST_DIR / relative_path
     text = read_text(path)
@@ -160,7 +231,7 @@ def import_file(path: Path) -> Path:
     body, copied_images, remote_images = rewrite_local_image_links(path, relative_path, body)
 
     destination.parent.mkdir(parents=True, exist_ok=True)
-    destination.write_text(front_matter(path, relative_path, text) + body, encoding="utf-8", newline="\n")
+    destination.write_text(front_matter(path, relative_path, text, pinned_posts) + body, encoding="utf-8", newline="\n")
     return destination, copied_images, remote_images
 
 
@@ -170,18 +241,20 @@ def main() -> None:
 
     DEST_DIR.mkdir(parents=True, exist_ok=True)
     markdown_files = sorted(SOURCE_DIR.rglob("*.md"))
+    pinned_posts = load_pinned_posts()
 
     imported = 0
     copied_images = 0
     remote_images = 0
     for path in markdown_files:
         if path.is_file():
-            _, file_copied_images, file_remote_images = import_file(path)
+            _, file_copied_images, file_remote_images = import_file(path, pinned_posts)
             imported += 1
             copied_images += file_copied_images
             remote_images += file_remote_images
 
     print(f"Imported {imported} Markdown files")
+    print(f"Applied {len(pinned_posts)} pinned post rules")
     print(f"Copied {copied_images} local images")
     print(f"Kept {remote_images} remote image links")
     print(f"Source: {SOURCE_DIR}")

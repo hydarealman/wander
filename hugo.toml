@@ -14,7 +14,7 @@ buildFuture = false
 buildExpired = false
 
 [pagination]
-  pagerSize = 10
+  pagerSize = 12
 
 [permalinks]
   posts = "/posts/:year/:month/:slug/"
@@ -37,8 +37,8 @@ buildExpired = false
 [params]
   env = "production"
   title = "wander"
-  description = "把日常笔记整理成可检索、可归档的个人博客。"
-  keywords = ["Hugo", "Blog", "Notes", "个人博客"]
+  description = "技术笔记、项目复盘、阅读记录和长期积累。"
+  keywords = ["Hugo", "Blog", "Notes", "个人博客", "技术笔记"]
   author = "dong"
   DateFormat = "2006-01-02"
   defaultTheme = "auto"
@@ -50,14 +50,34 @@ buildExpired = false
   ShowCodeCopyButtons = true
   ShowWordCount = true
   ShowRssButtonInSectionTermList = true
+  ShowPageNums = true
   UseHugoToc = true
   showtoc = true
   tocopen = false
   mainSections = ["posts"]
+  comments = false
+  hideFooter = false
+
+  [params.assets]
+    disableHLJS = true
 
   [params.homeInfoParams]
     Title = "wander"
-    Content = "这里收纳我的技术笔记、复盘、阅读和长期积累。"
+    Content = "技术笔记、项目复盘、阅读记录和长期积累。"
+
+  [params.fuseOpts]
+    isCaseSensitive = false
+    shouldSort = true
+    location = 0
+    distance = 1000
+    threshold = 0.35
+    minMatchCharLength = 1
+    keys = ["title", "permalink", "summary", "content", "tags", "categories"]
+
+  [params.editPost]
+    URL = "https://github.com/hydarealman/wander/edit/main/content"
+    Text = "编辑此页"
+    appendFilePath = true
 
   [[params.socialIcons]]
     name = "github"
@@ -82,19 +102,31 @@ buildExpired = false
   weight = 10
 
 [[menu.main]]
+  identifier = "categories"
+  name = "分类"
+  url = "/categories/"
+  weight = 20
+
+[[menu.main]]
   identifier = "archives"
   name = "归档"
   url = "/archives/"
-  weight = 20
+  weight = 30
 
 [[menu.main]]
   identifier = "tags"
   name = "标签"
   url = "/tags/"
-  weight = 30
+  weight = 40
 
 [[menu.main]]
   identifier = "search"
   name = "搜索"
   url = "/search/"
-  weight = 40
+  weight = 50
+
+[[menu.main]]
+  identifier = "about"
+  name = "关于"
+  url = "/about/"
+  weight = 60

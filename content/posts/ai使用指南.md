@@ -3,7 +3,12 @@ title: "ai使用指南"
 slug: "ai使用指南"
 date: 2026-06-06T16:04:27+08:00
 draft: false
-tags: []
+pinned: true
+weight: 1
+tags:
+  - "AI"
+categories:
+  - "学习记录"
 ---
 
 # ai使用指南

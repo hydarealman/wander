@@ -3,7 +3,9 @@ title: "OpenVINO"
 slug: "openvino"
 date: 2026-06-06T16:11:16+08:00
 draft: false
-tags: []
+tags:
+  - "AI"
+categories: []
 ---
 
 # OpenVINO

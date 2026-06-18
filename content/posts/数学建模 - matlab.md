@@ -3,7 +3,10 @@ title: "数学建模 \\- matlab"
 slug: "数学建模-matlab"
 date: 2026-06-06T16:05:42+08:00
 draft: false
-tags: []
+tags:
+  - "算法"
+categories:
+  - "算法数学"
 ---
 
 # 数学建模 \- matlab
