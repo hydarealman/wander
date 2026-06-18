@@ -3,6 +3,9 @@ title: "lab相关文献阅读"
 slug: "lab相关文献阅读"
 date: 2026-06-06T16:14:39+08:00
 draft: false
+source_file: "lab相关文献阅读.md"
+source_size: 7843
+source_lines: 377
 tags:
   - "读书"
 categories:

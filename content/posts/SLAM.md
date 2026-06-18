@@ -3,6 +3,9 @@ title: "SLAM"
 slug: "slam"
 date: 2026-06-06T16:08:23+08:00
 draft: false
+source_file: "SLAM.md"
+source_size: 9747
+source_lines: 502
 tags:
   - "ROS"
 categories:

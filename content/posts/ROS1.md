@@ -3,6 +3,9 @@ title: "ROS1"
 slug: "ros1"
 date: 2026-06-06T16:07:47+08:00
 draft: false
+source_file: "ROS1.md"
+source_size: 27751
+source_lines: 1292
 tags:
   - "ROS"
 categories:

@@ -190,6 +190,8 @@ def front_matter(path: Path, relative_path: Path, text: str, pinned_posts: dict[
     tags = merge_unique(tags_from_relative_path(relative_path), infer_terms(relative_path, title, TAG_RULES))
     categories = infer_terms(relative_path, title, CATEGORY_RULES)
     pinned_weight = pinned_posts.get(relative_path.as_posix())
+    source_size = path.stat().st_size
+    source_lines = text.count("\n") + 1 if text else 0
 
     lines = [
         "---",
@@ -197,6 +199,9 @@ def front_matter(path: Path, relative_path: Path, text: str, pinned_posts: dict[
         f"slug: {yaml_quote(slug_from_relative_path(relative_path))}",
         f"date: {date}",
         "draft: false",
+        f"source_file: {yaml_quote(relative_path.as_posix())}",
+        f"source_size: {source_size}",
+        f"source_lines: {source_lines}",
     ]
 
     if pinned_weight is not None:

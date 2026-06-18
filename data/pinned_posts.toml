@@ -2,7 +2,7 @@
 # path 使用 D:\notes 下的相对路径，和 content/posts 中的文件名通常一致。
 
 [[posts]]
-path = "ai使用指南.md"
+path = "桂工自瞄文档.md"
 weight = 1
 
 [[posts]]
@@ -10,5 +10,5 @@ path = "Git分布式版本控制工具.md"
 weight = 2
 
 [[posts]]
-path = "lab技术栈.md"
+path = "C_C++代码中积累的语法.md"
 weight = 3

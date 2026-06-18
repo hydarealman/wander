@@ -3,6 +3,9 @@ title: "xv6 for RISC\\-V"
 slug: "xv6-for-risc-v"
 date: 2026-06-06T16:10:22+08:00
 draft: false
+source_file: "xv6 for RISC-V.md"
+source_size: 33824
+source_lines: 1750
 tags:
   - "读书"
 categories: []

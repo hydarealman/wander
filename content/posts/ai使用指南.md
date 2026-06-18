@@ -3,8 +3,9 @@ title: "ai使用指南"
 slug: "ai使用指南"
 date: 2026-06-06T16:04:27+08:00
 draft: false
-pinned: true
-weight: 1
+source_file: "ai使用指南.md"
+source_size: 1340
+source_lines: 87
 tags:
   - "AI"
 categories:

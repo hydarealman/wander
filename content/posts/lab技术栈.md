@@ -3,8 +3,9 @@ title: "lab技术栈"
 slug: "lab技术栈"
 date: 2026-06-06T16:14:51+08:00
 draft: false
-pinned: true
-weight: 3
+source_file: "lab技术栈.md"
+source_size: 1522
+source_lines: 103
 tags:
   - "工具"
 categories:

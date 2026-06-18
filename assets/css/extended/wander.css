@@ -322,6 +322,162 @@ details.toc {
   background: var(--primary);
 }
 
+.library-header .post-description {
+  color: var(--secondary);
+}
+
+.library-panel {
+  margin: 18px 0 22px;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--entry);
+  box-shadow: 0 12px 34px rgba(31, 41, 51, 0.045);
+}
+
+.library-controls {
+  display: grid;
+  grid-template-columns: minmax(220px, 1.4fr) repeat(3, minmax(140px, 1fr));
+  gap: 12px;
+}
+
+.library-controls label {
+  display: grid;
+  gap: 6px;
+  color: var(--secondary);
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.library-controls input,
+.library-controls select {
+  width: 100%;
+  min-height: 40px;
+  padding: 0 11px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--primary);
+  background: var(--code-bg);
+  font-size: 14px;
+}
+
+.library-controls input:focus,
+.library-controls select:focus {
+  border-color: color-mix(in srgb, var(--wander-accent) 45%, var(--border));
+  outline: 2px solid color-mix(in srgb, var(--wander-accent) 18%, transparent);
+}
+
+.library-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 14px;
+  color: var(--secondary);
+  font-size: 14px;
+}
+
+.library-summary button {
+  min-height: 34px;
+  padding: 0 12px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--primary);
+  background: var(--entry);
+  font-size: 13px;
+}
+
+.library-summary button:hover {
+  border-color: var(--wander-accent);
+  color: var(--wander-accent);
+}
+
+.library-list {
+  display: grid;
+  gap: 12px;
+}
+
+.library-item {
+  position: relative;
+  padding: 17px 18px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--entry);
+  box-shadow: 0 8px 24px rgba(31, 41, 51, 0.035);
+}
+
+.library-item::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 4px;
+  border-radius: var(--radius) 0 0 var(--radius);
+  background: transparent;
+}
+
+.library-item.is-pinned::before {
+  background: var(--wander-accent-2);
+}
+
+.library-title {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--primary);
+  font-size: 18px;
+  font-weight: 750;
+  line-height: 1.35;
+}
+
+.library-title:hover {
+  color: var(--wander-accent);
+  text-decoration: none;
+}
+
+.library-title em {
+  flex: none;
+  padding: 3px 8px;
+  border: 1px solid color-mix(in srgb, var(--wander-accent-2) 38%, var(--border));
+  border-radius: 999px;
+  color: var(--wander-accent-2);
+  background: var(--wander-warm);
+  font-size: 12px;
+  font-style: normal;
+}
+
+.library-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  margin-top: 10px;
+  color: var(--secondary);
+  font-size: 13px;
+}
+
+.library-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 12px;
+}
+
+.library-tags span {
+  padding: 3px 8px;
+  border-radius: 999px;
+  color: var(--secondary);
+  background: var(--code-bg);
+  font-size: 12px;
+}
+
+.library-empty {
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--secondary);
+  background: var(--entry);
+}
+
 @media (max-width: 760px) {
   .main {
     padding: 14px;
@@ -339,7 +495,8 @@ details.toc {
 
   .wander-actions,
   .wander-stats,
-  .wander-pinned-list {
+  .wander-pinned-list,
+  .library-controls {
     grid-template-columns: 1fr 1fr;
   }
 }
@@ -347,7 +504,8 @@ details.toc {
 @media (max-width: 480px) {
   .wander-actions,
   .wander-stats,
-  .wander-pinned-list {
+  .wander-pinned-list,
+  .library-controls {
     grid-template-columns: 1fr;
   }
 

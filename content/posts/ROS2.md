@@ -3,6 +3,9 @@ title: "ROS2"
 slug: "ros2"
 date: 2026-06-06T16:03:32+08:00
 draft: false
+source_file: "ROS2.md"
+source_size: 25041
+source_lines: 1559
 tags:
   - "ROS"
 categories:

@@ -3,6 +3,9 @@ title: "AI辅助解决弹道复现BUG"
 slug: "ai辅助解决弹道复现bug"
 date: 2026-06-06T16:10:11+08:00
 draft: false
+source_file: "AI辅助解决弹道复现BUG.md"
+source_size: 528288
+source_lines: 8912
 tags:
   - "AI"
 categories: []

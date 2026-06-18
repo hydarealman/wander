@@ -3,6 +3,9 @@ title: "Prompt Engineering 提示工程"
 slug: "prompt-engineering-提示工程"
 date: 2026-06-06T16:11:04+08:00
 draft: false
+source_file: "Prompt Engineering 提示工程.md"
+source_size: 6289
+source_lines: 326
 tags:
   - "AI"
 categories: []

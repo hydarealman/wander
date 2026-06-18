@@ -102,6 +102,12 @@ buildExpired = false
   weight = 10
 
 [[menu.main]]
+  identifier = "library"
+  name = "索引"
+  url = "/library/"
+  weight = 15
+
+[[menu.main]]
   identifier = "categories"
   name = "分类"
   url = "/categories/"
@@ -130,3 +136,9 @@ buildExpired = false
   name = "关于"
   url = "/about/"
   weight = 60
+
+[[menu.main]]
+  identifier = "manual"
+  name = "说明"
+  url = "/manual/"
+  weight = 70

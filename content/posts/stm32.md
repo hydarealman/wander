@@ -3,6 +3,9 @@ title: "stm32"
 slug: "stm32"
 date: 2026-06-06T16:07:25+08:00
 draft: false
+source_file: "stm32.md"
+source_size: 58914
+source_lines: 2009
 tags:
   - "机器人"
 categories:

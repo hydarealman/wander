@@ -1,0 +1,18 @@
+<script>
+(() => {
+  const keyFor = (path) => `wander:view:${path}`;
+  const normalize = (value) => new URL(value, window.location.origin).pathname;
+  const post = document.querySelector("article.post-single");
+
+  if (post && window.location.pathname.includes("/posts/")) {
+    const key = keyFor(window.location.pathname);
+    const next = Number(localStorage.getItem(key) || 0) + 1;
+    localStorage.setItem(key, String(next));
+  }
+
+  document.querySelectorAll("[data-view-path]").forEach((node) => {
+    const key = keyFor(normalize(node.getAttribute("data-view-path") || window.location.pathname));
+    node.textContent = localStorage.getItem(key) || "0";
+  });
+})();
+</script>

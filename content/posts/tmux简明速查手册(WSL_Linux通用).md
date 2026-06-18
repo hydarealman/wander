@@ -3,6 +3,9 @@ title: "tmux简明速查手册\\(WSL/Linux通用\\)"
 slug: "tmux简明速查手册-wsl_linux通用"
 date: 2026-06-06T16:15:40+08:00
 draft: false
+source_file: "tmux简明速查手册(WSL_Linux通用).md"
+source_size: 695
+source_lines: 57
 tags:
   - "工具"
 categories:

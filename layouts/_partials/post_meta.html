@@ -16,6 +16,10 @@
     {{- $scratch.Add "meta" (slice (printf "<span>%s</span>" (i18n "words" .WordCount | default (printf "%d words" .WordCount)))) }}
 {{- end }}
 
+{{- if eq .Type "posts" -}}
+    {{- $scratch.Add "meta" (slice (printf "<span class='local-views'>本机 <span data-view-path='%s'>0</span> 次</span>" .RelPermalink)) }}
+{{- end }}
+
 {{- with (.GetTerms "categories") -}}
     {{- $cats := slice -}}
     {{- range . -}}

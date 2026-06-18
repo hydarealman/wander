@@ -3,6 +3,9 @@ title: "OpenVINO"
 slug: "openvino"
 date: 2026-06-06T16:11:16+08:00
 draft: false
+source_file: "OpenVINO.md"
+source_size: 1964
+source_lines: 87
 tags:
   - "AI"
 categories: []

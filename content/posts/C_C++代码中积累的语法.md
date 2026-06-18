@@ -3,6 +3,11 @@ title: "C/C\\+\\+代码中积累的语法"
 slug: "c_c++代码中积累的语法"
 date: 2026-06-06T16:03:22+08:00
 draft: false
+source_file: "C_C++代码中积累的语法.md"
+source_size: 41063
+source_lines: 1558
+pinned: true
+weight: 3
 tags:
   - "C/C++"
 categories:

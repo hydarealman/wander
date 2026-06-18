@@ -3,6 +3,9 @@ title: "Vscode命令行"
 slug: "vscode命令行"
 date: 2026-06-06T16:07:36+08:00
 draft: false
+source_file: "Vscode命令行.md"
+source_size: 6648
+source_lines: 350
 tags:
   - "工具"
 categories:

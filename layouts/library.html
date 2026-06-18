@@ -1,0 +1,198 @@
+{{- define "main" }}
+{{- $posts := sort (where site.RegularPages "Type" "in" site.Params.mainSections) "Date" "desc" -}}
+{{- $items := slice -}}
+{{- range $posts -}}
+  {{- $tags := slice -}}
+  {{- range (.GetTerms "tags") -}}{{- $tags = $tags | append .LinkTitle -}}{{- end -}}
+  {{- $categories := slice -}}
+  {{- range (.GetTerms "categories") -}}{{- $categories = $categories | append .LinkTitle -}}{{- end -}}
+  {{- $items = $items | append (dict
+    "title" .Title
+    "url" .RelPermalink
+    "date" (.Date.Format "2006-01-02")
+    "timestamp" .Date.Unix
+    "wordCount" .WordCount
+    "readingTime" .ReadingTime
+    "sourceSize" (default 0 (index .Params "source_size"))
+    "sourceLines" (default 0 (index .Params "source_lines"))
+    "sourceFile" (default "" (index .Params "source_file"))
+    "pinned" (default false .Params.pinned)
+    "weight" (default 1000 .Weight)
+    "tags" $tags
+    "categories" $categories
+  ) -}}
+{{- end -}}
+
+<header class="page-header library-header">
+  {{- partial "breadcrumbs.html" . }}
+  <h1>{{ .Title }}</h1>
+  <div class="post-description">用更像资料库的方式浏览所有文章。</div>
+</header>
+
+<section class="library-panel" aria-label="文章索引工具">
+  <div class="library-controls">
+    <label>
+      <span>搜索</span>
+      <input id="library-search" type="search" placeholder="标题、标签、分类、文件名" autocomplete="off">
+    </label>
+    <label>
+      <span>排序</span>
+      <select id="library-sort">
+        <option value="pinned">置顶优先</option>
+        <option value="date-desc">时间：新到旧</option>
+        <option value="date-asc">时间：旧到新</option>
+        <option value="title-asc">标题：A-Z</option>
+        <option value="title-desc">标题：Z-A</option>
+        <option value="words-desc">内容字数：多到少</option>
+        <option value="words-asc">内容字数：少到多</option>
+        <option value="size-desc">文件大小：大到小</option>
+        <option value="size-asc">文件大小：小到大</option>
+        <option value="views-desc">本机访问：多到少</option>
+        <option value="views-asc">本机访问：少到多</option>
+      </select>
+    </label>
+    <label>
+      <span>分类</span>
+      <select id="library-category">
+        <option value="">全部分类</option>
+      </select>
+    </label>
+    <label>
+      <span>标签</span>
+      <select id="library-tag">
+        <option value="">全部标签</option>
+      </select>
+    </label>
+  </div>
+  <div class="library-summary">
+    <span id="library-count">{{ len $items }} 篇文章</span>
+    <button id="library-reset" type="button">重置筛选</button>
+  </div>
+</section>
+
+<div id="library-list" class="library-list" aria-live="polite"></div>
+
+<script id="library-data" type="application/json">{{ $items | jsonify | safeJS }}</script>
+<script>
+(() => {
+  const items = JSON.parse(document.getElementById("library-data").textContent);
+  const list = document.getElementById("library-list");
+  const search = document.getElementById("library-search");
+  const sort = document.getElementById("library-sort");
+  const category = document.getElementById("library-category");
+  const tag = document.getElementById("library-tag");
+  const count = document.getElementById("library-count");
+  const reset = document.getElementById("library-reset");
+
+  const collator = new Intl.Collator("zh-Hans-CN", { numeric: true, sensitivity: "base" });
+  const viewKey = (url) => {
+    const path = new URL(url, window.location.origin).pathname;
+    return `wander:view:${path}`;
+  };
+  const viewsOf = (item) => Number(localStorage.getItem(viewKey(item.url)) || 0);
+  const formatSize = (bytes) => {
+    if (!bytes) return "0 B";
+    if (bytes < 1024) return `${bytes} B`;
+    if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+    return `${(bytes / 1024 / 1024).toFixed(2)} MB`;
+  };
+
+  const fillOptions = (select, values) => {
+    values.forEach((value) => {
+      const option = document.createElement("option");
+      option.value = value;
+      option.textContent = value;
+      select.appendChild(option);
+    });
+  };
+
+  fillOptions(category, [...new Set(items.flatMap((item) => item.categories))].sort(collator.compare));
+  fillOptions(tag, [...new Set(items.flatMap((item) => item.tags))].sort(collator.compare));
+
+  const itemText = (item) => [
+    item.title,
+    item.sourceFile,
+    item.tags.join(" "),
+    item.categories.join(" ")
+  ].join(" ").toLowerCase();
+
+  const compareBy = (mode) => {
+    const byTitle = (a, b) => collator.compare(a.title, b.title);
+    const byDateDesc = (a, b) => b.timestamp - a.timestamp || byTitle(a, b);
+    const byPinned = (a, b) => Number(b.pinned) - Number(a.pinned) || a.weight - b.weight || byDateDesc(a, b);
+    const byNumber = (getter, direction) => (a, b) => direction * (getter(a) - getter(b)) || byDateDesc(a, b);
+    const map = {
+      "pinned": byPinned,
+      "date-desc": byDateDesc,
+      "date-asc": (a, b) => a.timestamp - b.timestamp || byTitle(a, b),
+      "title-asc": byTitle,
+      "title-desc": (a, b) => byTitle(b, a),
+      "words-desc": byNumber((item) => item.wordCount, -1),
+      "words-asc": byNumber((item) => item.wordCount, 1),
+      "size-desc": byNumber((item) => item.sourceSize, -1),
+      "size-asc": byNumber((item) => item.sourceSize, 1),
+      "views-desc": byNumber(viewsOf, -1),
+      "views-asc": byNumber(viewsOf, 1)
+    };
+    return map[mode] || byPinned;
+  };
+
+  const render = () => {
+    const query = search.value.trim().toLowerCase();
+    const selectedCategory = category.value;
+    const selectedTag = tag.value;
+    const filtered = items
+      .filter((item) => !query || itemText(item).includes(query))
+      .filter((item) => !selectedCategory || item.categories.includes(selectedCategory))
+      .filter((item) => !selectedTag || item.tags.includes(selectedTag))
+      .sort(compareBy(sort.value));
+
+    count.textContent = `${filtered.length} / ${items.length} 篇文章`;
+    list.innerHTML = "";
+
+    if (!filtered.length) {
+      const empty = document.createElement("p");
+      empty.className = "library-empty";
+      empty.textContent = "没有匹配的文章。";
+      list.appendChild(empty);
+      return;
+    }
+
+    const fragment = document.createDocumentFragment();
+    filtered.forEach((item) => {
+      const article = document.createElement("article");
+      article.className = `library-item${item.pinned ? " is-pinned" : ""}`;
+      const tags = item.tags.slice(0, 5).map((value) => `<span>${value}</span>`).join("");
+      const categories = item.categories.slice(0, 2).join(" / ") || "未分类";
+      article.innerHTML = `
+        <a class="library-title" href="${item.url}">
+          <span>${item.title}</span>
+          ${item.pinned ? "<em>置顶</em>" : ""}
+        </a>
+        <div class="library-meta">
+          <span>${item.date}</span>
+          <span>${item.wordCount} 字</span>
+          <span>${item.readingTime} 分钟</span>
+          <span>${formatSize(item.sourceSize)}</span>
+          <span>本机 ${viewsOf(item)} 次</span>
+          <span>${categories}</span>
+        </div>
+        <div class="library-tags">${tags}</div>
+      `;
+      fragment.appendChild(article);
+    });
+    list.appendChild(fragment);
+  };
+
+  [search, sort, category, tag].forEach((node) => node.addEventListener("input", render));
+  reset.addEventListener("click", () => {
+    search.value = "";
+    sort.value = "pinned";
+    category.value = "";
+    tag.value = "";
+    render();
+  });
+  render();
+})();
+</script>
+{{- end }}

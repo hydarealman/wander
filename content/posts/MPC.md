@@ -3,6 +3,9 @@ title: "MPC"
 slug: "mpc"
 date: 2026-06-06T16:10:42+08:00
 draft: false
+source_file: "MPC.md"
+source_size: 224
+source_lines: 13
 tags:
   - "算法"
 categories:

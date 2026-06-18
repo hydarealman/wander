@@ -3,6 +3,9 @@ title: "数学建模 \\- matlab"
 slug: "数学建模-matlab"
 date: 2026-06-06T16:05:42+08:00
 draft: false
+source_file: "数学建模 - matlab.md"
+source_size: 6466
+source_lines: 254
 tags:
   - "算法"
 categories:
