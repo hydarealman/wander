@@ -49,6 +49,8 @@
         <option value="size-asc">文件大小：小到大</option>
         <option value="views-desc">本机访问：多到少</option>
         <option value="views-asc">本机访问：少到多</option>
+        <option value="likes-desc">点赞：多到少</option>
+        <option value="likes-asc">点赞：少到多</option>
       </select>
     </label>
     <label>
@@ -72,6 +74,13 @@
 
 <div id="library-list" class="library-list" aria-live="polite"></div>
 
+{{- $likeConfig := dict
+  "provider" (default "local" site.Params.likeSystem.provider)
+  "supabaseUrl" (default "" site.Params.likeSystem.supabaseUrl)
+  "supabaseAnonKey" (default "" site.Params.likeSystem.supabaseAnonKey)
+  "table" (default "doc_likes" site.Params.likeSystem.table)
+-}}
+<script id="library-like-config" type="application/json">{{ $likeConfig | jsonify | safeJS }}</script>
 <script id="library-data" type="application/json">{{ $items | jsonify | safeJS }}</script>
 <script>
 (() => {
@@ -89,7 +98,15 @@
     const path = new URL(url, window.location.origin).pathname;
     return `wander:view:${path}`;
   };
+  const likeKey = (url) => {
+    const path = new URL(url, window.location.origin).pathname;
+    return `wander:like-count:${path}`;
+  };
+  const likeConfigNode = document.getElementById("library-like-config") || document.getElementById("wander-like-config");
+  const likeConfig = likeConfigNode ? JSON.parse(likeConfigNode.textContent || "{}") : {};
+  const remoteLikeCounts = new Map();
   const viewsOf = (item) => Number(localStorage.getItem(viewKey(item.url)) || 0);
+  const likesOf = (item) => remoteLikeCounts.get(new URL(item.url, window.location.origin).pathname) ?? Number(localStorage.getItem(likeKey(item.url)) || 0);
   const formatSize = (bytes) => {
     if (!bytes) return "0 B";
     if (bytes < 1024) return `${bytes} B`;
@@ -132,7 +149,9 @@
       "size-desc": byNumber((item) => item.sourceSize, -1),
       "size-asc": byNumber((item) => item.sourceSize, 1),
       "views-desc": byNumber(viewsOf, -1),
-      "views-asc": byNumber(viewsOf, 1)
+      "views-asc": byNumber(viewsOf, 1),
+      "likes-desc": byNumber(likesOf, -1),
+      "likes-asc": byNumber(likesOf, 1)
     };
     return map[mode] || byPinned;
   };
@@ -175,6 +194,7 @@
           <span>${item.readingTime} 分钟</span>
           <span>${formatSize(item.sourceSize)}</span>
           <span>本机 ${viewsOf(item)} 次</span>
+          <span>${likesOf(item)} 赞</span>
           <span>${categories}</span>
         </div>
         <div class="library-tags">${tags}</div>
@@ -192,7 +212,25 @@
     tag.value = "";
     render();
   });
+  const loadRemoteLikes = async () => {
+    const provider = (likeConfig.provider || "local").toLowerCase();
+    if (provider !== "supabase" || !likeConfig.supabaseUrl || !likeConfig.supabaseAnonKey) return;
+    const apiBase = String(likeConfig.supabaseUrl).replace(/\/+$/, "");
+    const table = likeConfig.table || "doc_likes";
+    const response = await fetch(`${apiBase}/rest/v1/${encodeURIComponent(table)}?select=doc_id,count`, {
+      headers: {
+        "apikey": likeConfig.supabaseAnonKey,
+        "Authorization": `Bearer ${likeConfig.supabaseAnonKey}`
+      }
+    });
+    if (!response.ok) return;
+    const rows = await response.json();
+    rows.forEach((row) => remoteLikeCounts.set(row.doc_id, Number(row.count || 0)));
+    render();
+  };
+
   render();
+  loadRemoteLikes().catch(() => {});
 })();
 </script>
 {{- end }}

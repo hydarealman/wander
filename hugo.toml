@@ -79,6 +79,12 @@ buildExpired = false
     Text = "编辑此页"
     appendFilePath = true
 
+  [params.likeSystem]
+    provider = "local"
+    supabaseUrl = ""
+    supabaseAnonKey = ""
+    table = "doc_likes"
+
   [[params.socialIcons]]
     name = "github"
     url = "https://github.com/hydarealman"

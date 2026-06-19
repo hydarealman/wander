@@ -106,3 +106,8 @@ git push -u origin main
 ```
 
 之后每次 push 到 `main`，`.github/workflows/deploy.yml` 会自动构建并部署。
+
+
+## 点赞系统
+
+文章页底部有点赞按钮。默认是本机点赞；如需全网共享点赞数，在 Supabase 建表后把 `hugo.toml` 中 `[params.likeSystem]` 的 `provider` 改为 `supabase`，并填入 Project URL 与 anon public key。详细 SQL 和步骤见 `/manual/`。

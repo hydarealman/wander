@@ -1,3 +1,10 @@
+{{- $likeConfig := dict
+  "provider" (default "local" site.Params.likeSystem.provider)
+  "supabaseUrl" (default "" site.Params.likeSystem.supabaseUrl)
+  "supabaseAnonKey" (default "" site.Params.likeSystem.supabaseAnonKey)
+  "table" (default "doc_likes" site.Params.likeSystem.table)
+-}}
+<script id="wander-like-config" type="application/json">{{ $likeConfig | jsonify | safeJS }}</script>
 <script>
 (() => {
   const keyFor = (path) => `wander:view:${path}`;
@@ -14,5 +21,116 @@
     const key = keyFor(normalize(node.getAttribute("data-view-path") || window.location.pathname));
     node.textContent = localStorage.getItem(key) || "0";
   });
+})();
+
+(() => {
+  const configNode = document.getElementById("wander-like-config");
+  const config = configNode ? JSON.parse(configNode.textContent || "{}") : {};
+  const provider = (config.provider || "local").toLowerCase();
+  const hasSupabase = provider === "supabase" && config.supabaseUrl && config.supabaseAnonKey;
+  const storageKey = (docId) => `wander:liked:${docId}`;
+  const localCountKey = (docId) => `wander:like-count:${docId}`;
+  const normalizeUrl = (url) => String(url || "").replace(/\/+$/, "");
+  const apiBase = normalizeUrl(config.supabaseUrl);
+  const table = config.table || "doc_likes";
+  const headers = () => ({
+    "apikey": config.supabaseAnonKey,
+    "Authorization": `Bearer ${config.supabaseAnonKey}`,
+    "Content-Type": "application/json"
+  });
+
+  const setButtonState = (button, liked) => {
+    button.dataset.liked = liked ? "true" : "false";
+    button.setAttribute("aria-pressed", liked ? "true" : "false");
+    const mark = button.querySelector(".like-button-mark");
+    if (mark) mark.textContent = liked ? "已赞" : "赞";
+  };
+
+  const setStatus = (panel, message) => {
+    const status = panel.querySelector("[data-like-status]");
+    if (status) status.textContent = message;
+  };
+
+  const setCount = (panel, count) => {
+    const node = panel.querySelector("[data-like-count]");
+    if (node) node.textContent = String(Math.max(0, Number(count) || 0));
+  };
+
+  const getLocalCount = (docId) => Number(localStorage.getItem(localCountKey(docId)) || 0);
+  const setLocalCount = (docId, count) => localStorage.setItem(localCountKey(docId), String(count));
+
+  async function fetchRemoteCount(docId) {
+    const url = `${apiBase}/rest/v1/${encodeURIComponent(table)}?doc_id=eq.${encodeURIComponent(docId)}&select=count`;
+    const response = await fetch(url, { headers: headers() });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const rows = await response.json();
+    return Number(rows?.[0]?.count || 0);
+  }
+
+  async function incrementRemote(docId, title) {
+    const response = await fetch(`${apiBase}/rest/v1/rpc/increment_doc_like`, {
+      method: "POST",
+      headers: headers(),
+      body: JSON.stringify({ p_doc_id: docId, p_title: title })
+    });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const value = await response.json();
+    return Number(value || 0);
+  }
+
+  async function initPanel(panel) {
+    const button = panel.querySelector(".like-button");
+    const docId = panel.dataset.likeDoc || window.location.pathname;
+    const title = panel.dataset.likeTitle || document.title;
+    const liked = localStorage.getItem(storageKey(docId)) === "1";
+    setButtonState(button, liked);
+
+    if (hasSupabase) {
+      try {
+        setCount(panel, await fetchRemoteCount(docId));
+        setStatus(panel, liked ? "你已经赞过这篇文章" : "点赞会同步到全站统计");
+      } catch (error) {
+        setCount(panel, getLocalCount(docId));
+        setStatus(panel, "远程点赞暂不可用，当前使用本机点赞");
+      }
+    } else {
+      setCount(panel, getLocalCount(docId));
+      setStatus(panel, liked ? "你已经在本机赞过这篇文章" : "当前是本机点赞；配置 Supabase 后可同步给所有访客");
+    }
+
+    button.addEventListener("click", async () => {
+      if (localStorage.getItem(storageKey(docId)) === "1") {
+        setStatus(panel, hasSupabase ? "你已经赞过这篇文章" : "你已经在本机赞过这篇文章");
+        return;
+      }
+
+      button.disabled = true;
+      setStatus(panel, "正在记录点赞");
+      try {
+        let next;
+        if (hasSupabase) {
+          next = await incrementRemote(docId, title);
+        } else {
+          next = getLocalCount(docId) + 1;
+          setLocalCount(docId, next);
+        }
+        localStorage.setItem(storageKey(docId), "1");
+        setButtonState(button, true);
+        setCount(panel, next);
+        setStatus(panel, hasSupabase ? "感谢点赞，已同步到全站" : "感谢点赞，已记录在本机");
+      } catch (error) {
+        const next = getLocalCount(docId) + 1;
+        setLocalCount(docId, next);
+        localStorage.setItem(storageKey(docId), "1");
+        setButtonState(button, true);
+        setCount(panel, next);
+        setStatus(panel, "远程同步失败，已先记录在本机");
+      } finally {
+        button.disabled = false;
+      }
+    });
+  }
+
+  document.querySelectorAll(".like-panel").forEach(initPanel);
 })();
 </script>

@@ -1,0 +1,13 @@
+{{- if eq .Type "posts" }}
+<section class="like-panel" data-like-doc="{{ .RelPermalink }}" data-like-title="{{ .Title | plainify }}" aria-label="文章点赞">
+  <div class="like-copy">
+    <strong>这篇文章有帮助吗？</strong>
+    <span>给它点个赞，后续整理文章时会优先照顾高赞内容。</span>
+  </div>
+  <button class="like-button" type="button" aria-pressed="false">
+    <span class="like-button-mark">赞</span>
+    <span class="like-count" data-like-count>0</span>
+  </button>
+  <p class="like-status" data-like-status>点赞数据加载中</p>
+</section>
+{{- end }}
