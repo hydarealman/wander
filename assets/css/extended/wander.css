@@ -42,8 +42,10 @@
   --space-blue: #e2e8f0;
 }
 
-/* ── Override PaperMod .list background ── */
-.list { background: transparent; }
+/* ── Override ALL PaperMod backgrounds ── */
+.list,
+[data-theme="dark"] .list,
+[data-theme="light"] .list { background: transparent !important; }
 html { background: #050811; }
 
 /* ── Body — deep space: 60+ stars + nebula + galaxies ── */
