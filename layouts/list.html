@@ -55,6 +55,7 @@
 {{- end }}
 
 {{- $term := .Data.Term }}
+<div class="post-grid">
 {{- range $index, $page := $paginator.Pages }}
 
 {{- $class := "post-entry" }}
@@ -100,6 +101,7 @@
   <a class="entry-link" aria-label="post link to {{ .Title | plainify }}" href="{{ .Permalink }}"></a>
 </article>
 {{- end }}
+</div>
 
 {{- if gt $paginator.TotalPages 1 }}
 <footer class="page-footer">
