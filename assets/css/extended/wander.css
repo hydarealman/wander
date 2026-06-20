@@ -34,7 +34,9 @@
 
 body {
   background:
-    linear-gradient(180deg, var(--wander-paper) 0, var(--theme) 340px);
+    linear-gradient(180deg,
+      color-mix(in srgb, var(--wander-paper) 70%, transparent) 0,
+      color-mix(in srgb, var(--theme) 75%, transparent) 340px);
 }
 
 /* ── Nav ─────────────────────────────────────── */
@@ -90,85 +92,88 @@ body {
   overflow: hidden;
 }
 
-/* main glow — accretion disk warm halo */
+/* main glow — accretion disk + photon ring + halo */
 .wander-bh-bg::before {
   content: "";
   position: absolute;
-  top: 50%;
+  top: 45%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: min(80vw, 800px);
-  height: min(80vw, 800px);
+  width: min(100vw, 1000px);
+  height: min(100vw, 1000px);
   border-radius: 50%;
   background:
-    /* photon ring — thin bright circle */
+    /* photon ring — bright thin circle */
     radial-gradient(circle,
-      transparent 54.5%,
-      color-mix(in srgb, var(--wander-accent-2) 18%, transparent) 55%,
-      color-mix(in srgb, var(--wander-accent) 30%, transparent) 55.8%,
-      color-mix(in srgb, var(--wander-accent-2) 18%, transparent) 56.6%,
-      transparent 57.5%
+      transparent 53%,
+      color-mix(in srgb, var(--wander-accent-2) 35%, transparent) 53.5%,
+      color-mix(in srgb, var(--wander-accent) 55%, transparent) 54.2%,
+      color-mix(in srgb, var(--wander-accent-2) 35%, transparent) 54.9%,
+      transparent 55.6%
     ),
     /* inner shadow (event horizon) */
     radial-gradient(circle at 48% 48%,
-      color-mix(in srgb, var(--theme) 90%, transparent) 0%,
-      color-mix(in srgb, var(--theme) 60%, transparent) 40%,
-      transparent 54%
+      var(--theme) 0%,
+      color-mix(in srgb, var(--theme) 85%, transparent) 30%,
+      transparent 52.5%
     ),
-    /* accretion disk glow — asymmetric (Doppler beaming) */
-    radial-gradient(ellipse 90% 70% at 42% 48%,
-      color-mix(in srgb, var(--wander-accent-2) 12%, transparent) 0%,
-      color-mix(in srgb, var(--wander-accent) 8%, transparent) 30%,
-      color-mix(in srgb, var(--wander-accent) 4%, transparent) 55%,
-      transparent 75%
+    /* accretion disk glow — Doppler asymmetry */
+    radial-gradient(ellipse 85% 65% at 40% 46%,
+      color-mix(in srgb, var(--wander-accent-2) 22%, transparent) 0%,
+      color-mix(in srgb, var(--wander-accent-2) 14%, transparent) 20%,
+      color-mix(in srgb, var(--wander-accent) 10%, transparent) 42%,
+      color-mix(in srgb, var(--wander-accent) 5%, transparent) 60%,
+      transparent 78%
     ),
     /* outer gravitational lensing halo */
     radial-gradient(circle at 50% 50%,
-      transparent 60%,
-      color-mix(in srgb, var(--wander-accent) 3%, transparent) 72%,
-      color-mix(in srgb, var(--wander-accent-2) 2%, transparent) 85%,
+      transparent 56%,
+      color-mix(in srgb, var(--wander-accent) 8%, transparent) 68%,
+      color-mix(in srgb, var(--wander-accent-2) 5%, transparent) 80%,
+      color-mix(in srgb, var(--wander-accent) 3%, transparent) 90%,
       transparent 100%
     );
-  opacity: 0.65;
-  animation: bh-breathe 14s ease-in-out infinite alternate;
+  opacity: 0.85;
+  animation: bh-breathe 12s ease-in-out infinite alternate;
 }
 
-/* secondary speckle — subtle noise-like texture for disk grain */
+/* disk grain / speckle texture */
 .wander-bh-bg::after {
   content: "";
   position: absolute;
-  top: 50%;
+  top: 45%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: min(72vw, 720px);
-  height: min(72vw, 720px);
+  width: min(90vw, 880px);
+  height: min(90vw, 880px);
   border-radius: 50%;
   background:
-    radial-gradient(ellipse 85% 65% at 45% 47%,
-      transparent 45%,
-      color-mix(in srgb, var(--wander-accent-2) 3%, transparent) 55%,
-      transparent 65%
+    radial-gradient(ellipse 80% 60% at 42% 44%,
+      transparent 40%,
+      color-mix(in srgb, var(--wander-accent-2) 8%, transparent) 48%,
+      color-mix(in srgb, var(--wander-accent) 5%, transparent) 58%,
+      transparent 68%
     );
-  opacity: 0.5;
-  animation: bh-speckle 9s ease-in-out infinite alternate;
+  opacity: 0.6;
+  animation: bh-speckle 7s ease-in-out infinite alternate;
 }
 
 @keyframes bh-breathe {
-  0%   { opacity: 0.55; transform: translate(-50%, -50%) scale(0.98) rotate(0deg); }
-  100% { opacity: 0.72; transform: translate(-50%, -50%) scale(1.03) rotate(2deg); }
+  0%   { opacity: 0.78; transform: translate(-50%, -50%) scale(0.97) rotate(0deg); }
+  100% { opacity: 0.92; transform: translate(-50%, -50%) scale(1.04) rotate(3deg); }
 }
 
 @keyframes bh-speckle {
-  0%   { opacity: 0.35; transform: translate(-50%, -50%) scale(0.96); }
-  100% { opacity: 0.55; transform: translate(-50%, -50%) scale(1.04); }
+  0%   { opacity: 0.45; transform: translate(-50%, -50%) scale(0.95) rotate(0deg); }
+  100% { opacity: 0.65; transform: translate(-50%, -50%) scale(1.05) rotate(-2deg); }
 }
 
-/* reduce intensity in dark mode */
+/* dark mode — still visible but slightly muted */
 :root[data-theme="dark"] .wander-bh-bg::before {
-  opacity: 0.45;
+  opacity: 0.65;
 }
 :root[data-theme="dark"] .wander-bh-bg::after {
-  opacity: 0.3;
+  opacity: 0.45;
 }
 
 /* ── Hero ────────────────────────────────────── */
@@ -178,7 +183,8 @@ body {
   margin-bottom: 32px;
   padding: 40px 36px 36px;
   border-radius: var(--radius);
-  background: var(--entry);
+  background: color-mix(in srgb, var(--entry) 85%, transparent);
+  backdrop-filter: blur(2px);
   border: 1px solid var(--border);
   box-shadow:
     0 2px 0 0 color-mix(in srgb, var(--wander-accent) 12%, transparent),
@@ -344,7 +350,8 @@ body {
   padding: 16px 18px;
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  background: var(--wander-warm);
+  background: color-mix(in srgb, var(--wander-warm) 90%, transparent);
+  backdrop-filter: blur(4px);
   color: var(--primary);
   transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
   position: relative;
@@ -419,7 +426,8 @@ body {
   padding: 0;
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  background: var(--entry);
+  background: color-mix(in srgb, var(--entry) 92%, transparent);
+  backdrop-filter: blur(4px);
   box-shadow: 0 2px 0 0 var(--border),
               0 8px 24px rgba(31, 41, 51, 0.035);
   transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
