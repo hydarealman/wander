@@ -63,7 +63,7 @@ buildExpired = false
 
   [params.homeInfoParams]
     Title = "wander"
-    Content = "技术笔记、项目复盘、阅读记录和长期积累。"
+    Content = "技术笔记 · 项目复盘 · 阅读记录 · 长期积累"
 
   [params.fuseOpts]
     isCaseSensitive = false

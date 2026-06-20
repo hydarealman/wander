@@ -6,46 +6,63 @@
 {{- range $posts }}{{- $words = add $words .WordCount -}}{{- end -}}
 
 {{- with site.Params.homeInfoParams }}
-<article class="first-entry home-info wander-home">
-    <div class="wander-kicker">Personal Knowledge Base</div>
-    <header class="entry-header">
-        <h1>{{ .Title | markdownify }}</h1>
-    </header>
-    <div class="entry-content md-content">
-        {{ $opts := dict "display" "block" }}
-        {{ .Content | $.Page.RenderString $opts }}
-    </div>
-
-    <div class="wander-actions" aria-label="站点快捷入口">
-        <a href="{{ "posts/" | relURL }}">全部文章</a>
-        <a href="{{ "archives/" | relURL }}">时间归档</a>
-        <a href="{{ "tags/" | relURL }}">标签索引</a>
-        <a href="{{ "search/" | relURL }}">站内搜索</a>
-    </div>
-
-    <div class="wander-stats" aria-label="站点统计">
-        <span><strong>{{ len $posts }}</strong> 篇文章</span>
-        <span><strong>{{ len $tags }}</strong> 个标签</span>
-        <span><strong>{{ len $categories }}</strong> 个分类</span>
-        <span><strong>{{ div $words 1000 }}</strong>k 字</span>
-    </div>
-
-    {{- if $pinned }}
-    <section class="wander-pinned" aria-label="置顶文章">
-        <h2>置顶</h2>
-        <div class="wander-pinned-list">
-            {{- range $pinned }}
-            <a href="{{ .Permalink }}">
-                <span>{{ .Title }}</span>
-                <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>
-            </a>
-            {{- end }}
+<section class="wander-hero">
+    <div class="wander-hero__inner">
+        <div class="wander-hero__brand">
+            <span class="wander-hero__dots" aria-hidden="true"></span>
+            <h1 class="wander-hero__title">{{ .Title | markdownify }}</h1>
         </div>
-    </section>
-    {{- end }}
+        {{- with .Content }}
+        <p class="wander-hero__desc">{{ . | $.Page.RenderString (dict "display" "inline") }}</p>
+        {{- end }}
 
-    <footer class="entry-footer">
-        {{ partial "social_icons.html" (dict "align" site.Params.homeInfoParams.AlignSocialIconsTo) }}
-    </footer>
-</article>
+        <div class="wander-hero__stats" aria-label="站点统计">
+            <span><strong>{{ len $posts }}</strong> 篇文章</span>
+            <span class="wander-hero__sep"></span>
+            <span><strong>{{ len $tags }}</strong> 个标签</span>
+            <span class="wander-hero__sep"></span>
+            <span><strong>{{ len $categories }}</strong> 个分类</span>
+            <span class="wander-hero__sep"></span>
+            <span><strong>{{ div $words 1000 }}</strong>k 字</span>
+        </div>
+
+        <nav class="wander-hero__nav" aria-label="快捷导航">
+            <a href="{{ "posts/" | relURL }}">全部文章</a>
+            <a href="{{ "archives/" | relURL }}">归档</a>
+            <a href="{{ "tags/" | relURL }}">标签</a>
+            <a href="{{ "search/" | relURL }}">搜索</a>
+        </nav>
+    </div>
+</section>
+
+{{- if $pinned }}
+<section class="wander-featured" aria-label="置顶文章">
+    <h2 class="wander-featured__heading">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01z"/></svg>
+        置顶
+    </h2>
+    <div class="wander-featured__list">
+        {{- range $pinned }}
+        <a class="wander-featured__card" href="{{ .Permalink }}">
+            <span class="wander-featured__card-title">{{ .Title }}</span>
+            <span class="wander-featured__card-meta">
+                <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>
+                {{- with .Params.tags }}
+                <span class="wander-featured__card-tags">
+                    {{- range first 2 . }}
+                    <span>{{ . }}</span>
+                    {{- end }}
+                </span>
+                {{- end }}
+            </span>
+        </a>
+        {{- end }}
+    </div>
+</section>
+{{- end }}
+
+<footer class="wander-hero__social">
+    {{ partial "social_icons.html" (dict "align" site.Params.homeInfoParams.AlignSocialIconsTo) }}
+</footer>
+
 {{- end -}}
