@@ -72,6 +72,103 @@ body {
 
 .main {
   padding-top: 18px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Black Hole background ─────────────────────
+   Inspired by NPGS black hole shader (GPL v3)
+   github.com/baopinshui/NPGS
+   CSS approximation of accretion disk + photon ring + lensing halo
+   ────────────────────────────────────────────── */
+
+.wander-bh-bg {
+  position: fixed;
+  pointer-events: none;
+  z-index: 0;
+  inset: 0;
+  overflow: hidden;
+}
+
+/* main glow — accretion disk warm halo */
+.wander-bh-bg::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(80vw, 800px);
+  height: min(80vw, 800px);
+  border-radius: 50%;
+  background:
+    /* photon ring — thin bright circle */
+    radial-gradient(circle,
+      transparent 54.5%,
+      color-mix(in srgb, var(--wander-accent-2) 18%, transparent) 55%,
+      color-mix(in srgb, var(--wander-accent) 30%, transparent) 55.8%,
+      color-mix(in srgb, var(--wander-accent-2) 18%, transparent) 56.6%,
+      transparent 57.5%
+    ),
+    /* inner shadow (event horizon) */
+    radial-gradient(circle at 48% 48%,
+      color-mix(in srgb, var(--theme) 90%, transparent) 0%,
+      color-mix(in srgb, var(--theme) 60%, transparent) 40%,
+      transparent 54%
+    ),
+    /* accretion disk glow — asymmetric (Doppler beaming) */
+    radial-gradient(ellipse 90% 70% at 42% 48%,
+      color-mix(in srgb, var(--wander-accent-2) 12%, transparent) 0%,
+      color-mix(in srgb, var(--wander-accent) 8%, transparent) 30%,
+      color-mix(in srgb, var(--wander-accent) 4%, transparent) 55%,
+      transparent 75%
+    ),
+    /* outer gravitational lensing halo */
+    radial-gradient(circle at 50% 50%,
+      transparent 60%,
+      color-mix(in srgb, var(--wander-accent) 3%, transparent) 72%,
+      color-mix(in srgb, var(--wander-accent-2) 2%, transparent) 85%,
+      transparent 100%
+    );
+  opacity: 0.65;
+  animation: bh-breathe 14s ease-in-out infinite alternate;
+}
+
+/* secondary speckle — subtle noise-like texture for disk grain */
+.wander-bh-bg::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(72vw, 720px);
+  height: min(72vw, 720px);
+  border-radius: 50%;
+  background:
+    radial-gradient(ellipse 85% 65% at 45% 47%,
+      transparent 45%,
+      color-mix(in srgb, var(--wander-accent-2) 3%, transparent) 55%,
+      transparent 65%
+    );
+  opacity: 0.5;
+  animation: bh-speckle 9s ease-in-out infinite alternate;
+}
+
+@keyframes bh-breathe {
+  0%   { opacity: 0.55; transform: translate(-50%, -50%) scale(0.98) rotate(0deg); }
+  100% { opacity: 0.72; transform: translate(-50%, -50%) scale(1.03) rotate(2deg); }
+}
+
+@keyframes bh-speckle {
+  0%   { opacity: 0.35; transform: translate(-50%, -50%) scale(0.96); }
+  100% { opacity: 0.55; transform: translate(-50%, -50%) scale(1.04); }
+}
+
+/* reduce intensity in dark mode */
+:root[data-theme="dark"] .wander-bh-bg::before {
+  opacity: 0.45;
+}
+:root[data-theme="dark"] .wander-bh-bg::after {
+  opacity: 0.3;
 }
 
 /* ── Hero ────────────────────────────────────── */

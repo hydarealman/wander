@@ -111,3 +111,30 @@ git push -u origin main
 ## 点赞系统
 
 文章页底部有点赞按钮。默认是本机点赞；如需全网共享点赞数，在 Supabase 建表后把 `hugo.toml` 中 `[params.likeSystem]` 的 `provider` 改为 `supabase`，并填入 Project URL 与 anon public key。详细 SQL 和步骤见 `/manual/`。
+
+## 页面背景特效
+
+页面背景中的黑洞视觉效果（吸积盘辉光 + 光子环 + 引力透镜晕）的灵感来源于 [NPGS](https://github.com/baopinshui/NPGS) 项目中的 `BlackHole_common.glsl` 着色器。该着色器基于 Kerr 度规进行光线追踪，渲染了带有相对论多普勒效应、光子环和吸积盘物理的黑洞图像。
+
+本项目的 CSS 实现仅取其视觉意象，使用径向渐变和 CSS 动画模拟黑洞的吸积盘辉光与光子环效果，未直接使用原始 GLSL 代码。
+
+### 许可声明
+
+NPGS 项目遵循 **GNU General Public License v3 (GPL v3)**：
+
+> NPGS — Copyright (C) baopinshui
+> 
+> This program is free software: you can redistribute it and/or modify
+> it under the terms of the GNU General Public License as published by
+> the Free Software Foundation, either version 3 of the License, or
+> (at your option) any later version.
+> 
+> This program is distributed in the hope that it will be useful,
+> but WITHOUT ANY WARRANTY; without even the implied warranty of
+> MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+> GNU General Public License for more details.
+> 
+> You should have received a copy of the GNU General Public License
+> along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+完整的 GPL v3 许可证文本见 <https://www.gnu.org/licenses/gpl-3.0.html>。
