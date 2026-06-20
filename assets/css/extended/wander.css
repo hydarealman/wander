@@ -1,5 +1,5 @@
 :root {
-  --main-width: 1020px;
+  --main-width: 1160px;
   --radius: 8px;
   --wander-accent: #0f766e;
   --wander-accent-2: #b45309;
@@ -78,8 +78,8 @@ body {
 
 .wander-hero {
   position: relative;
-  margin-bottom: 36px;
-  padding: 48px 40px 40px;
+  margin-bottom: 32px;
+  padding: 40px 36px 36px;
   border-radius: var(--radius);
   background: var(--entry);
   border: 1px solid var(--border);
@@ -309,7 +309,7 @@ body {
 .post-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 18px;
+  gap: 14px;
 }
 
 /* ── Post cards ──────────────────────────────── */
@@ -355,14 +355,14 @@ body {
 .post-entry .entry-content,
 .post-entry .entry-taxonomy,
 .post-entry .entry-footer {
-  padding-left: 22px;
-  padding-right: 22px;
+  padding-left: 16px;
+  padding-right: 16px;
   position: relative;
   z-index: 1;
 }
 
 .post-entry .entry-header {
-  padding-top: 22px;
+  padding-top: 16px;
   order: 1;
 }
 
@@ -378,7 +378,7 @@ body {
 
 .post-entry .entry-footer {
   order: 4;
-  padding-bottom: 20px;
+  padding-bottom: 14px;
 }
 
 /* cover image inside card */
@@ -785,7 +785,7 @@ details.toc {
 
   .post-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 14px;
+    gap: 12px;
   }
 
   .page-header h1,
@@ -834,8 +834,8 @@ details.toc {
   .post-entry .entry-content,
   .post-entry .entry-taxonomy,
   .post-entry .entry-footer {
-    padding-left: 18px;
-    padding-right: 18px;
+    padding-left: 14px;
+    padding-right: 14px;
   }
 
   .library-controls {
