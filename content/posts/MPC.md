@@ -1,26 +1,20 @@
 ---
 title: "MPC"
 slug: "mpc"
-date: 2026-06-06T16:10:42+08:00
+date: 1970-01-21T22:38:48+08:00
 draft: false
-source_file: "MPC.md"
-source_size: 224
-source_lines: 13
+source_file: "feishu://mpc"
+source_size: 207
+source_lines: 7
 tags:
   - "算法"
 categories:
   - "算法数学"
 ---
 
-# MPC
-
+MPC
 MPC的核心思想是：
-
-1. 预测：使用系统模型预测未来一段时间内的状态
-
-2. 优化：求解一个有限时域的最优控制问题
-
-3. 反馈：只实施第一个控制量，然后重新计算
-
-
+预测：使用系统模型预测未来一段时间内的状态
+优化：求解一个有限时域的最优控制问题
+反馈：只实施第一个控制量，然后重新计算
 

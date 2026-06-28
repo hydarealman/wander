@@ -1,18 +1,16 @@
 ---
 title: "labelme"
 slug: "labelme"
-date: 2026-06-06T16:06:04+08:00
+date: 1970-01-21T22:38:48+08:00
 draft: false
-source_file: "labelme.md"
-source_size: 73
-source_lines: 7
-tags: []
+source_file: "feishu://labelme"
+source_size: 66
+source_lines: 4
+tags:
+  - "工具"
 categories: []
 ---
 
-# labelme
-
-https://blog\.csdn\.net/Natsuago/article/details/143815956
-
-
+labelme
+https://blog.csdn.net/Natsuago/article/details/143815956
 

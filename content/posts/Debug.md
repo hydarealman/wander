@@ -1,18 +1,15 @@
 ---
 title: "Debug"
 slug: "debug"
-date: 2026-06-06T16:06:15+08:00
+date: 1970-01-21T22:38:48+08:00
 draft: false
-source_file: "Debug.md"
-source_size: 41
-source_lines: 7
+source_file: "feishu://debug"
+source_size: 36
+source_lines: 4
 tags: []
 categories: []
 ---
 
-# Debug
-
+Debug
 segmentation fault 段错误
-
-
 
