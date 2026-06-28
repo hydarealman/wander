@@ -60,6 +60,38 @@ def clean_title(value: str) -> str:
     return value or "Untitled"
 
 
+# ── Heading heuristic ──────────────────────────
+# Converts flat numbered lines (common in Feishu exports) to markdown ## headings.
+# Only applied to posts that have zero existing #-style headings.
+
+HEADING_CANDIDATE_RE = re.compile(
+    r"^(\d+)[\.、．]\s*(.+)$|"             # "1.xxx" or "1、xxx"
+    r"^(第[一二三四五六七八九十\d]+[章节部分])\s*(.+)$",  # "第一章 xxx"
+    re.M,
+)
+
+
+def has_markdown_headings(text: str) -> bool:
+    """Return True if text contains any #-style markdown heading."""
+    return bool(re.search(r"^#{1,6}\s+", text, re.M))
+
+
+def apply_heading_heuristic(body: str) -> str:
+    """Convert numbered flat lines to ## headings, but only if there are no
+    existing markdown headings (to avoid double-processing)."""
+    if has_markdown_headings(body):
+        return body
+
+    def heading_replacer(m: re.Match) -> str:
+        if m.group(1):  # "1.xxx" or "1、xxx"
+            return f"## {m.group(1)}. {m.group(2)}"
+        elif m.group(3):  # "第一章 xxx"
+            return f"## {m.group(3)} {m.group(4)}"
+        return m.group(0)
+
+    return HEADING_CANDIDATE_RE.sub(heading_replacer, body)
+
+
 def yaml_quote(value: str) -> str:
     escaped = value.replace("\\", "\\\\").replace('"', '\\"')
     escaped = escaped.replace("\r", "\\r").replace("\n", "\\n")
@@ -241,6 +273,7 @@ def import_file(path: Path, pinned_posts: dict[str, int]) -> Path:
     text = read_text(path)
     body = strip_existing_front_matter(text).lstrip("\ufeff")
     body, copied_images, remote_images = rewrite_local_image_links(path, relative_path, body)
+    body = apply_heading_heuristic(body)
 
     destination.parent.mkdir(parents=True, exist_ok=True)
     destination.write_text(front_matter(path, relative_path, text, pinned_posts) + body, encoding="utf-8", newline="\n")
