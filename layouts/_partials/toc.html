@@ -1,0 +1,48 @@
+{{- $headers := findRE "<h[1-6].*?>(.|\n])+?</h[1-6]>" .Content -}}
+{{- $has_headers := ge (len $headers) 1 -}}
+
+{{- if $has_headers }}
+<aside class="wander-toc" aria-label="文档目录">
+  <div class="wander-toc__header">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <line x1="8" y1="6" x2="21" y2="6"></line>
+      <line x1="8" y1="12" x2="21" y2="12"></line>
+      <line x1="8" y1="18" x2="21" y2="18"></line>
+      <line x1="3" y1="6" x2="3.01" y2="6"></line>
+      <line x1="3" y1="12" x2="3.01" y2="12"></line>
+      <line x1="3" y1="18" x2="3.01" y2="18"></line>
+    </svg>
+    <span>目录</span>
+    <span class="wander-toc__count">{{ len $headers }} 个章节</span>
+  </div>
+  <nav class="wander-toc__nav">
+    {{- if (.Param "UseHugoToc") }}
+    {{- .TableOfContents }}
+    {{- else }}
+    <ul>
+      {{- range $headers }}
+      {{- $id := index (findRE "id=\"(.*?)\"" . 1) 0 }}
+      {{- $cleanedID := replace (replace $id "id=\"" "") "\"" "" }}
+      {{- $text := replaceRE "<h[1-6].*?>(.+)</h[1-6]>" "$1" . }}
+      <li><a href="#{{ $cleanedID }}">{{ $text | plainify | safeHTML }}</a></li>
+      {{- end }}
+    </ul>
+    {{- end }}
+  </nav>
+</aside>
+{{- else }}
+<aside class="wander-toc wander-toc--empty" aria-label="文档目录">
+  <div class="wander-toc__header">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <line x1="8" y1="6" x2="21" y2="6"></line>
+      <line x1="8" y1="12" x2="21" y2="12"></line>
+      <line x1="8" y1="18" x2="21" y2="18"></line>
+      <line x1="3" y1="6" x2="3.01" y2="6"></line>
+      <line x1="3" y1="12" x2="3.01" y2="12"></line>
+      <line x1="3" y1="18" x2="3.01" y2="18"></line>
+    </svg>
+    <span>目录</span>
+  </div>
+  <p class="wander-toc__empty-hint">本文暂无章节标题，内容为纯文本笔记。</p>
+</aside>
+{{- end }}

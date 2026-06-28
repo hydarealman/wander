@@ -1,5 +1,5 @@
 ---
-title: "SSH"
+title: "ssh"
 slug: "ssh"
 date: 2026-06-28T13:24:17+08:00
 draft: false

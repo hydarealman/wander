@@ -1,5 +1,5 @@
 ---
-title: "附加后,程序会暂停,你可以设置断点然后输入continue让程序继续"
+title: "Vscode命令行"
 slug: "vscode命令行"
 date: 2026-06-13T11:05:24+08:00
 draft: false

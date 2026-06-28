@@ -1,5 +1,5 @@
 ---
-title: "leetcode"
+title: "leetcode_"
 slug: "leetcode_"
 date: 2026-06-06T16:02:11+08:00
 draft: false

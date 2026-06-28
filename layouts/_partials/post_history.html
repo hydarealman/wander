@@ -1,0 +1,43 @@
+{{- /* Commit history timeline widget. Uses data from generate_git_history.py via .Site.Data.git_history. */ -}}
+{{- if eq .Type "posts" }}
+  {{- $gitData := dict }}
+  {{- if fileExists "data/git_history.json" }}
+    {{- $loaded := index hugo.Data "git_history" }}
+    {{- if $loaded }}
+      {{- $gitData = $loaded }}
+    {{- end }}
+  {{- end }}
+  {{- $fileKey := .File.Path }}
+  {{- $fileEntry := index $gitData $fileKey | default (dict "commits" slice) }}
+  {{- $commits := $fileEntry.commits }}
+  {{- if and $commits (gt (len $commits) 1) }}
+  <section class="post-githistory">
+    <details>
+      <summary>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <span>文档修订记录</span>
+        <span class="post-githistory-count">{{ len $commits }} 次修订</span>
+      </summary>
+      <div class="post-githistory-body">
+        <ol class="git-timeline">
+          {{- range $commits }}
+          <li class="git-timeline-item">
+            <time datetime="{{ .date }}">{{- dateFormat "01-02" (time .date) -}}</time>
+            <div class="git-timeline-dot"></div>
+            <div class="git-timeline-card">
+              <a href="https://github.com/hydarealman/wander/commit/{{ .hash }}" target="_blank" rel="noopener" title="查看此次提交">{{ .shortHash }}</a>
+              <span class="git-timeline-msg">{{ .subject }}</span>
+              <span class="git-timeline-author">{{ .author }}</span>
+            </div>
+          </li>
+          {{- end }}
+        </ol>
+        <a class="post-githistory-full" href="https://github.com/hydarealman/wander/commits/main/content/{{ .File.Path }}" target="_blank" rel="noopener">
+          在 GitHub 上查看完整历史
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        </a>
+      </div>
+    </details>
+  </section>
+  {{- end }}
+{{- end }}

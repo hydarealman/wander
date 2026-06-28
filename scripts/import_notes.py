@@ -49,11 +49,8 @@ def strip_existing_front_matter(text: str) -> str:
     return FRONT_MATTER_RE.sub("", text, count=1)
 
 
-def extract_title(path: Path, text: str) -> str:
-    body = LEADING_HTML_COMMENT_RE.sub("", strip_existing_front_matter(text), count=1)
-    match = HEADING_RE.search(body)
-    if match:
-        return clean_title(match.group(1))
+def extract_title(path: Path, _text: str) -> str:
+    # Use filename (without .md) as title — the document name IS the title.
     return clean_title(path.stem)
 
 

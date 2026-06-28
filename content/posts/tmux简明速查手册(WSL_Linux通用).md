@@ -1,5 +1,5 @@
 ---
-title: "tmux简明速查手册\\(WSL/Linux通用\\)"
+title: "tmux简明速查手册(WSL_Linux通用)"
 slug: "tmux简明速查手册-wsl_linux通用"
 date: 2026-06-06T16:15:40+08:00
 draft: false

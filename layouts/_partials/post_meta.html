@@ -34,6 +34,11 @@
     {{- end }}
 {{- end }}
 
+{{- $gitinfo := (partial "post_gitinfo.html" .) }}
+{{- if $gitinfo }}
+    {{- $scratch.Add "meta" (slice $gitinfo) }}
+{{- end }}
+
 {{- with ($scratch.Get "meta") }}
     {{- delimit . "&nbsp;·&nbsp;" | safeHTML -}}
 {{- end -}}

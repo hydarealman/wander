@@ -1,5 +1,5 @@
 ---
-title: "Claude Code"
+title: "claude-code"
 slug: "claude-code"
 date: 2026-06-28T13:24:17+08:00
 draft: false

@@ -1,5 +1,5 @@
 ---
-title: "数学建模 - matlab"
+title: "数学建模-matlab"
 slug: "数学建模-matlab"
 date: 2026-06-28T12:44:45+08:00
 draft: false

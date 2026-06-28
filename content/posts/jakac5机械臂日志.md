@@ -1,5 +1,5 @@
 ---
-title: "双机械臂防碰撞 Demo 调试总结"
+title: "jakac5机械臂日志"
 slug: "jakac5机械臂日志"
 date: 2026-06-28T13:24:17+08:00
 draft: false

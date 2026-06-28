@@ -1,0 +1,8 @@
+{{- /* Last-modified git info line for post-meta bar. Uses Hugo's built-in .GitInfo. */ -}}
+{{- if and .GitInfo (eq .Type "posts") }}
+<span class="meta-gitinfo" title="{{ .GitInfo.Subject }}">
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+  <span>更新于 {{ .Lastmod | time.Format ":date_medium" }}</span>
+  <a href="https://github.com/hydarealman/wander/commit/{{ .GitInfo.Hash }}" target="_blank" rel="noopener" class="meta-gitinfo-hash">@{{ .GitInfo.AbbreviatedHash }}</a>
+</span>
+{{- end }}

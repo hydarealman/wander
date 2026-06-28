@@ -1,5 +1,5 @@
 ---
-title: "用于输出git提交日志"
+title: "Git分布式版本控制工具"
 slug: "git分布式版本控制工具"
 date: 2026-06-13T11:05:24+08:00
 draft: false

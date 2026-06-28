@@ -1,5 +1,5 @@
 ---
-title: "Prompt Engineering 提示工程"
+title: "prompt-engineering-提示工程"
 slug: "prompt-engineering-提示工程"
 date: 2026-06-28T12:44:45+08:00
 draft: false

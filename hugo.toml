@@ -7,6 +7,7 @@ defaultContentLanguage = "zh"
 hasCJKLanguage = true
 enableRobotsTXT = true
 enableEmoji = true
+enableGitInfo = true
 timeZone = "Asia/Shanghai"
 
 buildDrafts = false
@@ -53,7 +54,7 @@ buildExpired = false
   ShowPageNums = true
   UseHugoToc = true
   showtoc = true
-  tocopen = false
+  tocopen = true
   mainSections = ["posts"]
   comments = false
   hideFooter = false

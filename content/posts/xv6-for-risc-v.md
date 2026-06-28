@@ -1,5 +1,5 @@
 ---
-title: "编译时同时生成依赖文件"
+title: "xv6-for-risc-v"
 slug: "xv6-for-risc-v"
 date: 2026-06-28T12:44:45+08:00
 draft: false
