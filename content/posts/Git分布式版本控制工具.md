@@ -3,6 +3,8 @@ title: "用于输出git提交日志"
 slug: "git分布式版本控制工具"
 date: 2026-06-13T11:05:24+08:00
 draft: false
+pinned: true
+weight: 2
 source_file: "feishu://git分布式版本控制工具"
 source_size: 4044
 source_lines: 167

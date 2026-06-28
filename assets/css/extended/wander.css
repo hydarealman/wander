@@ -497,7 +497,7 @@ body.list,
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
 }
 
-/* card inner content area */
+/* card inner content area — no z-index so entry-link stays on top */
 .post-entry .entry-header,
 .post-entry .entry-content,
 .post-entry .entry-taxonomy,
@@ -505,7 +505,6 @@ body.list,
   padding-left: 16px;
   padding-right: 16px;
   position: relative;
-  z-index: 1;
 }
 
 .post-entry .entry-header  { padding-top: 16px; order: 1; }
@@ -592,9 +591,9 @@ body.list,
 
 .post-entry .entry-footer,
 .entry-footer a,
-.post-meta a { position: relative; z-index: 1; }
+.post-meta a { position: relative; z-index: 3; }
 
-.entry-link { position: absolute; inset: 0; z-index: 1; }
+.entry-link { position: absolute; inset: 0; z-index: 2; }
 
 /* ── Page header ─────────────────────────────── */
 
