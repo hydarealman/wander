@@ -58,7 +58,7 @@ QMainWindow 提供了一个预定义布局的主窗口框架
 
 
 
-1. 中心部件相关
+## 1. 中心部件相关
 void setCentralWidget(QWidget *widget)
 作用：设置窗口中央区域显示的部件（必须调用）。
 参数：任何 QWidget 子类（如 QTextEdit、QTableWidget、自定义部件）。
@@ -68,7 +68,7 @@ QTextEdit *edit = new QTextEdit;setCentralWidget(edit);
 QWidget *centralWidget() const
 作用：返回当前的中心部件，没有则返回 nullptr。
 
-2. 菜单栏相关
+## 2. 菜单栏相关
 void setMenuBar(QMenuBar *menuBar)
 作用：将指定的菜单栏设置为窗口的菜单栏。
 注意：通常直接用 menuBar() 获取默认菜单栏，无需手动创建。
@@ -78,7 +78,7 @@ QMenuBar *myMenuBar = new QMenuBar(this);myMenuBar->addMenu("文件");setMenuBar
 QMenuBar *menuBar() const
 作用：返回窗口的菜单栏（如果没有则自动创建一个空的菜单栏）。
 
-3. 状态栏相关
+## 3. 状态栏相关
 void setStatusBar(QStatusBar *statusBar)
 作用：设置状态栏。
 示例：
@@ -87,7 +87,7 @@ QStatusBar *sb = new QStatusBar(this);sb->showMessage("就绪");setStatusBar(sb)
 QStatusBar *statusBar() const
 作用：返回状态栏（如果没有则自动创建）。
 
-4. 工具栏相关
+## 4. 工具栏相关
 void addToolBar(QToolBar *toolbar)
 作用：添加一个工具栏，默认放在顶部区域。
 示例：
@@ -106,7 +106,7 @@ Qt::ToolBarArea toolBarArea(const QToolBar *toolbar) const
 void setToolButtonStyle(Qt::ToolButtonStyle style)
 作用：控制所有工具栏上的按钮样式（仅图标、仅文字、文字在图标下等）。
 
-5. 停靠窗口（QDockWidget）相关
+## 5. 停靠窗口（QDockWidget）相关
 void addDockWidget(Qt::DockWidgetArea area, QDockWidget *dockwidget)
 作用：将停靠窗口添加到指定区域（左侧、右侧、顶部、底部）。
 示例：
@@ -124,7 +124,7 @@ QMainWindow::AnimatedDocks（动画效果）
 QMainWindow::AllowTabbedDocks（允许标签页）
 QMainWindow::VerticalTabs（垂直标签）
 
-6. 布局与外观
+## 6. 布局与外观
 void setCorner(Qt::Corner corner, Qt::DockWidgetArea area)
 作用：指定哪个停靠区域可以占据窗口的角落。
 示例：让右上角属于左侧停靠区：
@@ -133,7 +133,7 @@ setCorner(Qt::TopRightCorner, Qt::LeftDockWidgetArea);
 void setDocumentMode(bool enabled)
 作用：启用“文档模式”（没有单独的工具栏/菜单栏边框，适合嵌入文档）。
 
-7. 状态保存与恢复（重要！）
+## 7. 状态保存与恢复（重要！）
 QByteArray saveState(int version = 0) const
 作用：保存当前窗口所有工具栏、停靠窗口的位置、大小、可见性状态。
 返回值：可以保存到文件或 QSettings。
@@ -143,7 +143,7 @@ bool restoreState(const QByteArray &state, int version = 0)
 cpp
 // 保存QSettings settings("MyCompany", "MyApp");settings.setValue("mainWindow/state", saveState());// 恢复restoreState(settings.value("mainWindow/state").toByteArray());
 
-8. 其他常用函数
+## 8. 其他常用函数
 void setIconSize(const QSize &iconSize)
 作用：设置工具栏图标的大小。
 void setToolTipDuration(int msec)
