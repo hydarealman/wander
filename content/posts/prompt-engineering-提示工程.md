@@ -1,7 +1,7 @@
 ---
 title: "Prompt Engineering 提示工程"
 slug: "prompt-engineering-提示工程"
-date: 1970-01-21T22:38:48+08:00
+date: 1970-01-21T23:10:23+08:00
 draft: false
 source_file: "feishu://prompt-engineering-提示工程"
 source_size: 4697
@@ -188,11 +188,11 @@ image.png
 
 
 
-![图片 1](/images/feishu/prompt-engineering-提示工程/image_8dbf05.png)
-![图片 2](/images/feishu/prompt-engineering-提示工程/image_566795.png)
-![图片 3](/images/feishu/prompt-engineering-提示工程/image_a812c1.png)
-![图片 4](/images/feishu/prompt-engineering-提示工程/image_b22605.png)
-![图片 5](/images/feishu/prompt-engineering-提示工程/image_55d396.png)
-![图片 6](/images/feishu/prompt-engineering-提示工程/image_a7f7a3.png)
-![图片 7](/images/feishu/prompt-engineering-提示工程/image_efca32.png)
-![图片 8](/images/feishu/prompt-engineering-提示工程/image_8d59d9.png)
+![图片 1](/images/feishu/prompt-engineering-提示工程/image_bdebef.png)
+![图片 2](/images/feishu/prompt-engineering-提示工程/image_f5576c.png)
+![图片 3](/images/feishu/prompt-engineering-提示工程/image_4b3b55.png)
+![图片 4](/images/feishu/prompt-engineering-提示工程/image_aac566.png)
+![图片 5](/images/feishu/prompt-engineering-提示工程/image_29d992.png)
+![图片 6](/images/feishu/prompt-engineering-提示工程/image_1ba50e.png)
+![图片 7](/images/feishu/prompt-engineering-提示工程/image_72f362.png)
+![图片 8](/images/feishu/prompt-engineering-提示工程/image_36d313.png)

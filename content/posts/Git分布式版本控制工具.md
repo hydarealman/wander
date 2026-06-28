@@ -1,11 +1,11 @@
 ---
 title: "用于输出git提交日志"
 slug: "git分布式版本控制工具"
-date: 1970-01-21T22:38:48+08:00
+date: 1970-01-21T23:10:23+08:00
 draft: false
 source_file: "feishu://git分布式版本控制工具"
-source_size: 3549
-source_lines: 144
+source_size: 4044
+source_lines: 167
 tags:
   - "工具"
 categories:
@@ -154,4 +154,27 @@ git remote set-url origin git@github.com:hydarealman/AimScope.git
 git push -u origin main
 
 
-![图片 1](/images/feishu/git分布式版本控制工具/image_8630fa.png)
+代码回滚: 
+查看版本历史,找到目标提交的哈希值
+
+git log --oneline
+
+输出示例
+a1b2c3d (HEAD -> main) 最新提交
+e4f5g6h 上一个提交
+i7j8k9l 更早的提交  ← 目标版本
+
+
+两种回滚方式
+方法一: git reset(强硬回滚,会 丢失后续提交)
+
+# 将分支指针、暂存区和工作区都回滚到目标提交
+git reset --hard i7j8k9l
+
+
+方法二: git revert(安全回滚,保留历史)
+
+git revert --no-commit i7j8k9l..HEAD
+git commit -m "回滚到 i7j8k9l"
+
+![图片 1](/images/feishu/git分布式版本控制工具/image_dbbd9e.png)

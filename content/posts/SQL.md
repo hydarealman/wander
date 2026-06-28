@@ -1,18 +1,16 @@
 ---
 title: "SQL"
 slug: "sql"
-date: 2026-06-06T16:13:36+08:00
+date: 1970-01-21T23:10:23+08:00
 draft: false
-source_file: "SQL.md"
-source_size: 9
-source_lines: 5
+source_file: "feishu://sql"
+source_size: 5
+source_lines: 3
 tags:
   - "工具"
 categories:
   - "编程开发"
 ---
 
-# SQL
-
-
+SQL
 

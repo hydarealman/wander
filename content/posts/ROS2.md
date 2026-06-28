@@ -1,7 +1,7 @@
 ---
 title: "ROS2"
 slug: "ros2"
-date: 1970-01-21T22:38:48+08:00
+date: 1970-01-21T23:10:23+08:00
 draft: false
 source_file: "feishu://ros2"
 source_size: 23057
@@ -792,4 +792,4 @@ ros2 run village_wang wang2_node
 
 
 
-![图片 1](/images/feishu/ros2/image_3062ac.png)
+![图片 1](/images/feishu/ros2/image_b18bd0.png)

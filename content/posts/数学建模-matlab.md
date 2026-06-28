@@ -1,7 +1,7 @@
 ---
 title: "数学建模 - matlab"
 slug: "数学建模-matlab"
-date: 1970-01-21T22:38:48+08:00
+date: 1970-01-21T23:10:23+08:00
 draft: false
 source_file: "feishu://数学建模-matlab"
 source_size: 5309
@@ -160,7 +160,7 @@ options = optimoptions('linprog', 'Algorithm', 'interior-point', 'Display', 'ite
 
 整数规划
 
-![图片 1](/images/feishu/数学建模-matlab/image_8ac8d4.png)
-![图片 2](/images/feishu/数学建模-matlab/image_e5c2f0.png)
-![图片 3](/images/feishu/数学建模-matlab/image_86d273.png)
-![图片 4](/images/feishu/数学建模-matlab/image_84ff99.png)
+![图片 1](/images/feishu/数学建模-matlab/image_ebbb75.png)
+![图片 2](/images/feishu/数学建模-matlab/image_ea6759.png)
+![图片 3](/images/feishu/数学建模-matlab/image_6acdec.png)
+![图片 4](/images/feishu/数学建模-matlab/image_13fd80.png)

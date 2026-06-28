@@ -1,7 +1,7 @@
 ---
 title: "录制单个话题"
 slug: "ros1"
-date: 1970-01-21T22:38:48+08:00
+date: 1970-01-21T23:10:23+08:00
 draft: false
 source_file: "feishu://ros1"
 source_size: 26366
@@ -799,4 +799,4 @@ rqt_plot 话题名称
 同时查看多个特定话题
 rqt_plot /debugpub/data/data /debugpub1/data/data                                                                                                                                                                                                                                                                                                                                                                                               
 
-![图片 1](/images/feishu/ros1/0ad8c37504e42b9e10a9eab9b806f3b_5c914d.jpg)
+![图片 1](/images/feishu/ros1/0ad8c37504e42b9e10a9eab9b806f3b_eb7712.jpg)

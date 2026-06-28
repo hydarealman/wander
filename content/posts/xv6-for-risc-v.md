@@ -1,7 +1,7 @@
 ---
 title: "编译时同时生成依赖文件"
 slug: "xv6-for-risc-v"
-date: 1970-01-21T22:38:48+08:00
+date: 1970-01-21T23:10:23+08:00
 draft: false
 source_file: "feishu://xv6-for-risc-v"
 source_size: 28775
@@ -1114,24 +1114,24 @@ $
 
 
 
-![图片 1](/images/feishu/xv6-for-risc-v/image_e94a6d.png)
-![图片 2](/images/feishu/xv6-for-risc-v/image_710a13.png)
-![图片 3](/images/feishu/xv6-for-risc-v/image_98677e.png)
-![图片 4](/images/feishu/xv6-for-risc-v/image_f4657f.png)
-![图片 5](/images/feishu/xv6-for-risc-v/image_146022.png)
-![图片 6](/images/feishu/xv6-for-risc-v/image_e5681f.png)
-![图片 7](/images/feishu/xv6-for-risc-v/image_297973.png)
-![图片 8](/images/feishu/xv6-for-risc-v/image_2d6fbe.png)
-![图片 9](/images/feishu/xv6-for-risc-v/image_070bf1.png)
-![图片 10](/images/feishu/xv6-for-risc-v/image_00fe25.png)
-![图片 11](/images/feishu/xv6-for-risc-v/image_b61192.png)
-![图片 12](/images/feishu/xv6-for-risc-v/image_a7262b.png)
-![图片 13](/images/feishu/xv6-for-risc-v/image_355656.png)
-![图片 14](/images/feishu/xv6-for-risc-v/image_be952b.png)
-![图片 15](/images/feishu/xv6-for-risc-v/image_d81710.png)
-![图片 16](/images/feishu/xv6-for-risc-v/image_10a195.png)
-![图片 17](/images/feishu/xv6-for-risc-v/image_8695cf.png)
-![图片 18](/images/feishu/xv6-for-risc-v/image_1c5f46.png)
-![图片 19](/images/feishu/xv6-for-risc-v/767f41d251ad2e9cf2b4af58522ec6c_92d191.png)
-![图片 20](/images/feishu/xv6-for-risc-v/image_f754e1.png)
-![图片 21](/images/feishu/xv6-for-risc-v/6de8c40ce3633da02e99069d27316c4_5be63a.jpg)
+![图片 1](/images/feishu/xv6-for-risc-v/image_0a3ea6.png)
+![图片 2](/images/feishu/xv6-for-risc-v/image_523fbd.png)
+![图片 3](/images/feishu/xv6-for-risc-v/image_f00d18.png)
+![图片 4](/images/feishu/xv6-for-risc-v/image_55a461.png)
+![图片 5](/images/feishu/xv6-for-risc-v/image_57dd27.png)
+![图片 6](/images/feishu/xv6-for-risc-v/image_4f6460.png)
+![图片 7](/images/feishu/xv6-for-risc-v/image_3cbcae.png)
+![图片 8](/images/feishu/xv6-for-risc-v/image_89aa53.png)
+![图片 9](/images/feishu/xv6-for-risc-v/image_f40951.png)
+![图片 10](/images/feishu/xv6-for-risc-v/image_627ba7.png)
+![图片 11](/images/feishu/xv6-for-risc-v/image_7b01d4.png)
+![图片 12](/images/feishu/xv6-for-risc-v/image_3d89d2.png)
+![图片 13](/images/feishu/xv6-for-risc-v/image_86cfea.png)
+![图片 14](/images/feishu/xv6-for-risc-v/image_5376a2.png)
+![图片 15](/images/feishu/xv6-for-risc-v/image_74f0b7.png)
+![图片 16](/images/feishu/xv6-for-risc-v/image_789efe.png)
+![图片 17](/images/feishu/xv6-for-risc-v/image_7e03ba.png)
+![图片 18](/images/feishu/xv6-for-risc-v/image_2e6c2e.png)
+![图片 19](/images/feishu/xv6-for-risc-v/767f41d251ad2e9cf2b4af58522ec6c_3b9296.png)
+![图片 20](/images/feishu/xv6-for-risc-v/image_ccf172.png)
+![图片 21](/images/feishu/xv6-for-risc-v/6de8c40ce3633da02e99069d27316c4_8a0bb1.jpg)
