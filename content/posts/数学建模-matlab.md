@@ -1,7 +1,7 @@
 ---
 title: "数学建模 - matlab"
 slug: "数学建模-matlab"
-date: 1970-01-21T23:10:23+08:00
+date: 2026-06-28T12:44:45+08:00
 draft: false
 source_file: "feishu://数学建模-matlab"
 source_size: 5309

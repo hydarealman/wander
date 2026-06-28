@@ -1,11 +1,13 @@
 ---
 title: "C/C++代码中积累的语法"
 slug: "c-c++代码中积累的语法"
-date: 1970-01-21T23:10:23+08:00
+date: 2026-06-28T12:44:45+08:00
 draft: false
 source_file: "feishu://c-c++代码中积累的语法"
 source_size: 39103
 source_lines: 853
+pinned: true
+weight: 3
 tags:
   - "C/C++"
 categories:

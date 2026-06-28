@@ -1,7 +1,7 @@
 ---
 title: "双机械臂防碰撞 Demo 调试总结"
 slug: "jakac5机械臂日志"
-date: 1970-01-21T23:10:24+08:00
+date: 2026-06-28T13:24:17+08:00
 draft: false
 source_file: "feishu://jakac5机械臂日志"
 source_size: 14949

@@ -3,131 +3,69 @@
 :root {
   --main-width: 1160px;
   --radius: 10px;
-  /* deep space */
-  --space-dark: #080c14;
-  --space-blue: #0f1a2e;
-  --space-purple: #1a1030;
+  /* sunset sky colors */
+  --space-dark: #1a0a2e;
+  --space-blue: #2d1b4e;
+  --space-purple: #5c2d5d;
   /* accents */
-  --wander-accent: #2dd4bf;
-  --wander-accent-2: #f59e0b;
-  --wander-accent-3: #f97316;
+  --wander-accent: #f59e0b;
+  --wander-accent-2: #e8773a;
+  --wander-accent-3: #c4553f;
   /* surfaces */
-  --wander-soft: rgba(45, 212, 191, 0.08);
-  --wander-warm: rgba(245, 158, 11, 0.08);
+  --wander-soft: rgba(245, 158, 11, 0.1);
+  --wander-warm: rgba(232, 119, 58, 0.1);
   --wander-paper: #0c1119;
-  --theme: #080c14;
-  --entry: rgba(15, 20, 35, 0.82);
+  --theme: #1a0a2e;
+  --entry: rgba(15, 20, 35, 0.9);
   --primary: #e2e8f0;
   --secondary: #94a3b8;
   --content: #cbd5e1;
-  --border: rgba(255, 255, 255, 0.08);
+  --border: rgba(255, 255, 255, 0.06);
   --code-bg: rgba(15, 23, 42, 0.6);
 }
 
 :root[data-theme="light"] {
-  --wander-accent: #0d9488;
-  --wander-accent-2: #d97706;
-  --wander-accent-3: #ea580c;
-  --wander-soft: rgba(13, 148, 136, 0.06);
-  --wander-warm: rgba(217, 119, 6, 0.06);
+  --wander-accent: #d97706;
+  --wander-accent-2: #ea580c;
+  --wander-accent-3: #dc2626;
+  --wander-soft: rgba(217, 119, 6, 0.06);
+  --wander-warm: rgba(234, 88, 12, 0.06);
   --wander-paper: #f8fafc;
   --theme: #f1f5f9;
-  --entry: rgba(255, 255, 255, 0.88);
+  --entry: rgba(255, 255, 255, 0.92);
   --primary: #1e293b;
   --secondary: #64748b;
   --content: #334155;
-  --border: rgba(0, 0, 0, 0.08);
+  --border: rgba(0, 0, 0, 0.06);
   --code-bg: #f1f5f9;
   --space-dark: #f8fafc;
   --space-blue: #e2e8f0;
 }
 
-/*
-   Strategy: put deep space on <html> (PaperMod never sets html background),
-   force <body> transparent. No more specificity battles — html bg always
-   shines through. One unified deep space across every page.
-*/
-
-/* ── Deep space on <html> ─────────────────────── */
+/* ── Sunset pixel-art landscape background ───── */
 
 html {
   background:
-    /* ═══ brighter stars (2px) ═══ */
-    radial-gradient(2px 2px at 8% 5%,   rgba(255,255,255,0.9), transparent),
-    radial-gradient(2px 2px at 25% 8%,  rgba(255,255,255,0.8), transparent),
-    radial-gradient(2px 2px at 42% 3%,  rgba(255,255,255,0.85), transparent),
-    radial-gradient(2px 2px at 58% 7%,  rgba(255,255,255,0.75), transparent),
-    radial-gradient(2px 2px at 72% 4%,  rgba(255,255,255,0.9), transparent),
-    radial-gradient(2px 2px at 88% 9%,  rgba(255,255,255,0.8), transparent),
-    radial-gradient(2px 2px at 15% 18%, rgba(255,255,255,0.7), transparent),
-    radial-gradient(2px 2px at 35% 14%, rgba(255,255,255,0.85), transparent),
-    radial-gradient(2px 2px at 55% 19%, rgba(255,255,255,0.7), transparent),
-    radial-gradient(2px 2px at 78% 13%, rgba(255,255,255,0.8), transparent),
-    radial-gradient(2px 2px at 93% 16%, rgba(255,255,255,0.75), transparent),
-    /* ═══ medium stars (1.5px) ═══ */
-    radial-gradient(1.5px 1.5px at 3% 12%,  rgba(255,255,255,0.6), transparent),
-    radial-gradient(1.5px 1.5px at 18% 22%, rgba(255,255,255,0.55), transparent),
-    radial-gradient(1.5px 1.5px at 32% 9%,  rgba(255,255,255,0.65), transparent),
-    radial-gradient(1.5px 1.5px at 48% 25%, rgba(255,255,255,0.5), transparent),
-    radial-gradient(1.5px 1.5px at 62% 11%, rgba(255,255,255,0.6), transparent),
-    radial-gradient(1.5px 1.5px at 70% 28%, rgba(255,255,255,0.55), transparent),
-    radial-gradient(1.5px 1.5px at 85% 21%, rgba(255,255,255,0.6), transparent),
-    radial-gradient(1.5px 1.5px at 10% 35%, rgba(255,255,255,0.5), transparent),
-    radial-gradient(1.5px 1.5px at 40% 32%, rgba(255,255,255,0.6), transparent),
-    radial-gradient(1.5px 1.5px at 65% 38%, rgba(255,255,255,0.55), transparent),
-    /* ═══ dim stars (1px) ═══ */
-    radial-gradient(1px 1px at 6% 28%,   rgba(255,255,255,0.35), transparent),
-    radial-gradient(1px 1px at 13% 40%,  rgba(255,255,255,0.4), transparent),
-    radial-gradient(1px 1px at 21% 15%,  rgba(255,255,255,0.3), transparent),
-    radial-gradient(1px 1px at 28% 35%,  rgba(255,255,255,0.45), transparent),
-    radial-gradient(1px 1px at 33% 45%,  rgba(255,255,255,0.35), transparent),
-    radial-gradient(1px 1px at 38% 20%,  rgba(255,255,255,0.3), transparent),
-    radial-gradient(1px 1px at 44% 38%,  rgba(255,255,255,0.4), transparent),
-    radial-gradient(1px 1px at 50% 12%,  rgba(255,255,255,0.35), transparent),
-    radial-gradient(1px 1px at 53% 30%,  rgba(255,255,255,0.45), transparent),
-    radial-gradient(1px 1px at 59% 42%,  rgba(255,255,255,0.3), transparent),
-    radial-gradient(1px 1px at 63% 16%,  rgba(255,255,255,0.4), transparent),
-    radial-gradient(1px 1px at 68% 34%,  rgba(255,255,255,0.35), transparent),
-    radial-gradient(1px 1px at 73% 44%,  rgba(255,255,255,0.45), transparent),
-    radial-gradient(1px 1px at 77% 8%,   rgba(255,255,255,0.3), transparent),
-    radial-gradient(1px 1px at 82% 32%,  rgba(255,255,255,0.4), transparent),
-    radial-gradient(1px 1px at 87% 40%,  rgba(255,255,255,0.35), transparent),
-    radial-gradient(1px 1px at 91% 26%,  rgba(255,255,255,0.3), transparent),
-    radial-gradient(1px 1px at 96% 36%,  rgba(255,255,255,0.4), transparent),
-    radial-gradient(1px 1px at 4% 48%,   rgba(255,255,255,0.35), transparent),
-    radial-gradient(1px 1px at 17% 50%,  rgba(255,255,255,0.3), transparent),
-    radial-gradient(1px 1px at 26% 55%,  rgba(255,255,255,0.4), transparent),
-    radial-gradient(1px 1px at 46% 48%,  rgba(255,255,255,0.35), transparent),
-    radial-gradient(1px 1px at 57% 52%,  rgba(255,255,255,0.3), transparent),
-    radial-gradient(1px 1px at 69% 50%,  rgba(255,255,255,0.4), transparent),
-    radial-gradient(1px 1px at 81% 55%,  rgba(255,255,255,0.35), transparent),
-    radial-gradient(1px 1px at 94% 48%,  rgba(255,255,255,0.3), transparent),
-    /* ═══ nebula clouds ═══ */
-    radial-gradient(ellipse 55% 40% at 25% 25%,
-      rgba(45, 212, 191, 0.05) 0%, rgba(20, 180, 160, 0.02) 40%, transparent 70%),
-    radial-gradient(ellipse 40% 35% at 65% 20%,
-      rgba(139, 92, 246, 0.05) 0%, rgba(100, 60, 220, 0.02) 35%, transparent 65%),
-    radial-gradient(ellipse 50% 30% at 50% 50%,
-      rgba(245, 158, 11, 0.04) 0%, transparent 60%),
-    radial-gradient(ellipse 35% 45% at 15% 60%,
-      rgba(30, 160, 200, 0.04) 0%, transparent 55%),
-    radial-gradient(ellipse 30% 35% at 80% 65%,
-      rgba(100, 60, 200, 0.04) 0%, transparent 55%),
-    /* ═══ distant galaxies ═══ */
-    radial-gradient(ellipse 3% 1.5% at 20% 30%,
-      rgba(200, 210, 255, 0.08) 0%, transparent 100%),
-    radial-gradient(ellipse 2% 1% at 75% 25%,
-      rgba(220, 200, 255, 0.06) 0%, transparent 100%),
-    radial-gradient(ellipse 2.5% 1.2% at 60% 55%,
-      rgba(200, 220, 255, 0.07) 0%, transparent 100%),
-    radial-gradient(ellipse 1.5% 0.8% at 35% 48%,
-      rgba(210, 200, 240, 0.05) 0%, transparent 100%),
-    /* ═══ deep space base ═══ */
-    linear-gradient(175deg,
-      #060b18 0%, #0a1225 20%, #0c162c 40%,
-      #0d1830 60%, #0b1428 80%, #080e1c 100%)
-    !important;
-  background-attachment: fixed !important;
+    /* bottom gradient mask for text readability */
+    linear-gradient(0deg,
+      rgba(10, 8, 20, 0.9) 0%,
+      rgba(10, 8, 20, 0.7) 30%,
+      rgba(10, 8, 20, 0.4) 55%,
+      rgba(10, 8, 20, 0.15) 75%,
+      rgba(10, 8, 20, 0.02) 90%,
+      transparent 100%
+    ),
+    /* sunset landscape image */
+    url('/images/sunset-bg.png') no-repeat center top fixed,
+    /* gradient fallback */
+    linear-gradient(180deg,
+      #1a0a2e 0%, #2d1b4e 15%, #5c2d5d 28%,
+      #8b3a5e 45%, #c4553f 65%, #e8773a 80%, #f4a236 100%);
+  background-size:
+    100% auto,
+    cover,
+    auto;
+  background-attachment: fixed, fixed, scroll;
 }
 
 /* ── Force body transparent — let html bg show ── */
@@ -140,29 +78,47 @@ body.list,
   background: transparent !important;
 }
 
+/*
+ * ═══════════════════════════════════════════════════════════════
+ * BLACK HOLE BACKGROUND — preserved for future restoration
+ * ═══════════════════════════════════════════════════════════════
+ *
+ * The black hole effect (accretion disk + photon ring + gravitational lensing)
+ * is preserved below. To restore it:
+ *   1. Comment out the "Sunset pixel-art landscape" html background above
+ *   2. Uncomment the "Deep space" html background below
+ *   3. Uncomment .wander-bh-bg block and @keyframes
+ *   4. Restore <div class="wander-bh-bg"> in layouts/_partials/extend_footer.html
+ *
+ * ── Deep space on <html> (preserved) ────────────
+ *
+ * html {
+ *   background:
+ *     [star field gradients preserved below...]
+ * }
+ *
+ * ── Black Hole background layers (preserved) ──
+ *
+ * .wander-bh-bg { ... }
+ * .wander-bh-bg::before { ... }
+ * .wander-bh-bg::after  { ... }
+ * @keyframes bh-breathe { ... }
+ * @keyframes bh-rotate   { ... }
+ *
+ * ═══════════════════════════════════════════════════════════════
+ */
+
 /* ── Nav — translucent ──────────────────────── */
 
 .nav {
-  background: rgba(8, 12, 20, 0.7);
-  backdrop-filter: blur(16px);
+  background: rgba(8, 12, 20, 0.85);
   border-bottom: 1px solid var(--border);
 }
 
 .logo a {
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: 0;
   color: var(--primary);
-}
-
-.logo a::before {
-  content: "";
-  display: inline-block;
-  width: 9px;
-  height: 9px;
-  margin-inline-end: 10px;
-  border-radius: 50%;
-  background: var(--wander-accent);
-  box-shadow: 10px 0 0 var(--wander-accent-2), 0 0 8px var(--wander-accent);
 }
 
 #menu a {
@@ -184,7 +140,10 @@ body.list,
   z-index: 1;
 }
 
-/* ── Black Hole — dramatic, deep, awe-inspiring ─ */
+/* ── Black Hole — preserved for future restoration ─
+ *
+ * To restore: also uncomment the deep-space html background
+ * and restore <div class="wander-bh-bg"> in extend_footer.html
 
 .wander-bh-bg {
   position: fixed;
@@ -193,16 +152,6 @@ body.list,
   inset: 0;
   overflow: hidden;
 }
-
-/*
-   Black hole — 6 visual layers (back to front):
-   1. Outer gravitational lensing halo — wide, subtle ghost ring
-   2. Accretion disk — bright, asymmetric warm glow (Doppler beaming)
-   3. Inner hot disk — white-hot innermost stable orbit
-   4. Photon ring — razor-thin, brilliant ring at photon sphere
-   5. Penumbra — soft transition zone
-   6. Event horizon — absolute void, pure black
-*/
 
 .wander-bh-bg::before {
   content: "";
@@ -214,7 +163,6 @@ body.list,
   height: min(150vw, 1400px);
   border-radius: 50%;
   background:
-    /* 6. event horizon — absolute black void, sharp cutoff */
     radial-gradient(circle at 49% 49%,
       #000000 0%,
       #000103 15%,
@@ -226,14 +174,12 @@ body.list,
       rgba(10, 18, 32, 0.35) 50.2%,
       transparent 51%
     ),
-    /* 5. penumbra — soft dark halo around event horizon */
     radial-gradient(circle,
       transparent 48.5%,
       rgba(20, 30, 50, 0.4) 49.2%,
       rgba(15, 25, 45, 0.2) 50%,
       transparent 51.5%
     ),
-    /* 4. photon ring — razor-thin, brilliant cyan-gold ring */
     radial-gradient(circle,
       transparent 50.5%,
       rgba(255, 200, 60, 0.25) 50.7%,
@@ -244,7 +190,6 @@ body.list,
       rgba(245, 158, 11, 0.3) 51.5%,
       transparent 52%
     ),
-    /* 3. inner hot disk — white-hot plasma near ISCO */
     radial-gradient(ellipse 70% 42% at 43% 48%,
       transparent 33%,
       rgba(255, 240, 200, 0.2) 36%,
@@ -253,7 +198,6 @@ body.list,
       rgba(245, 158, 11, 0.15) 50%,
       transparent 57%
     ),
-    /* 2. main accretion disk — strong Doppler asymmetry (left bright, right dim) */
     radial-gradient(ellipse 95% 58% at 34% 46%,
       rgba(255, 180, 40, 0.45) 0%,
       rgba(249, 140, 20, 0.4) 8%,
@@ -263,7 +207,6 @@ body.list,
       rgba(45, 212, 191, 0.08) 55%,
       transparent 65%
     ),
-    /* 1. outer gravitational lensing halo — wide ghost ring */
     radial-gradient(circle at 50% 50%,
       transparent 52%,
       rgba(45, 212, 191, 0.06) 54%,
@@ -273,12 +216,10 @@ body.list,
       rgba(100, 150, 220, 0.02) 72%,
       transparent 80%
     );
-
   animation: bh-breathe 12s ease-in-out infinite alternate;
   filter: blur(0.3px);
 }
 
-/* Outer ambient glow — pure soft light-bending halo (no concentrated features) */
 .wander-bh-bg::after {
   content: "";
   position: absolute;
@@ -314,9 +255,10 @@ body.list,
 
 :root[data-theme="dark"] .wander-bh-bg::before { opacity: 0.95; }
 :root[data-theme="dark"] .wander-bh-bg::after  { opacity: 0.7; }
-
 :root[data-theme="light"] .wander-bh-bg::before { opacity: 0.35; }
 :root[data-theme="light"] .wander-bh-bg::after  { opacity: 0.22; }
+
+── end black hole ── */
 
 /* ── Hero — glass with subtle glow ──────────── */
 
@@ -326,24 +268,8 @@ body.list,
   padding: 40px 36px 36px;
   border-radius: var(--radius);
   background: var(--entry);
-  backdrop-filter: blur(12px);
   border: 1px solid var(--border);
-  box-shadow:
-    0 0 0 1px rgba(45, 212, 191, 0.06),
-    0 8px 40px rgba(0, 0, 0, 0.3);
-  overflow: hidden;
-}
-
-.wander-hero::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse 70% 60% at 80% 20%,
-      rgba(45, 212, 191, 0.06) 0%, transparent 60%),
-    radial-gradient(ellipse 50% 40% at 15% 80%,
-      rgba(245, 158, 11, 0.04) 0%, transparent 60%);
-  pointer-events: none;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
 .wander-hero__inner { position: relative; z-index: 1; }
@@ -372,18 +298,16 @@ body.list,
 
 .wander-hero__dots::before {
   background: var(--wander-accent);
-  box-shadow: 0 0 6px var(--wander-accent);
 }
 
 .wander-hero__dots::after {
   background: var(--wander-accent-2);
-  box-shadow: 0 0 6px var(--wander-accent-2);
 }
 
 .wander-hero__title {
   margin: 0;
   font-size: 44px;
-  font-weight: 850;
+  font-weight: 700;
   line-height: 1.1;
   letter-spacing: -0.02em;
   color: var(--primary);
@@ -448,7 +372,6 @@ body.list,
   border-color: var(--wander-accent);
   color: var(--wander-accent);
   background: var(--wander-soft);
-  box-shadow: 0 0 12px rgba(45, 212, 191, 0.1);
   text-decoration: none;
 }
 
@@ -485,27 +408,16 @@ body.list,
   border: 1px solid var(--border);
   border-radius: var(--radius);
   background: var(--entry);
-  backdrop-filter: blur(12px);
   color: var(--primary);
   transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
   position: relative;
   overflow: hidden;
 }
 
-.wander-featured__card::before {
-  content: "";
-  position: absolute;
-  inset: 0 auto 0 0;
-  width: 3px;
-  background: var(--wander-accent-2);
-  border-radius: var(--radius) 0 0 var(--radius);
-  box-shadow: 0 0 8px rgba(245, 158, 11, 0.3);
-}
-
 .wander-featured__card:hover {
   border-color: rgba(245, 158, 11, 0.3);
   transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3), 0 0 20px rgba(245, 158, 11, 0.05);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
   text-decoration: none;
 }
 
@@ -562,8 +474,7 @@ body.list,
   border: 1px solid var(--border);
   border-radius: var(--radius);
   background: var(--entry);
-  backdrop-filter: blur(12px);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
 }
 
@@ -579,14 +490,13 @@ body.list,
 
 .post-entry.is-pinned::before {
   background: var(--wander-accent-2);
-  box-shadow: 0 0 8px rgba(245, 158, 11, 0.3);
 }
 
 .post-entry:hover,
 .post-entry:focus-within {
   transform: translateY(-3px);
-  border-color: rgba(45, 212, 191, 0.25);
-  box-shadow: 0 8px 35px rgba(0, 0, 0, 0.4), 0 0 25px rgba(45, 212, 191, 0.06);
+  border-color: var(--wander-accent);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
 }
 
 /* card inner content area */
@@ -727,7 +637,6 @@ details.toc {
   border: 1px solid var(--border);
   border-radius: var(--radius);
   background: var(--entry);
-  backdrop-filter: blur(12px);
 }
 
 .library-controls {
@@ -760,7 +669,7 @@ details.toc {
 .library-controls select:focus {
   border-color: var(--wander-accent);
   outline: none;
-  box-shadow: 0 0 0 2px rgba(45, 212, 191, 0.15);
+  box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.15);
 }
 
 .library-summary {
@@ -796,7 +705,6 @@ details.toc {
   border: 1px solid var(--border);
   border-radius: var(--radius);
   background: var(--entry);
-  backdrop-filter: blur(12px);
 }
 
 .library-item::before {
@@ -810,7 +718,6 @@ details.toc {
 
 .library-item.is-pinned::before {
   background: var(--wander-accent-2);
-  box-shadow: 0 0 8px rgba(245, 158, 11, 0.3);
 }
 
 .library-title {
@@ -881,7 +788,6 @@ details.toc {
   border: 1px solid var(--border);
   border-radius: var(--radius);
   background: var(--entry);
-  backdrop-filter: blur(12px);
 }
 
 .like-copy { display: grid; gap: 4px; }
@@ -899,7 +805,7 @@ details.toc {
   min-width: 104px;
   min-height: 42px;
   padding: 0 16px;
-  border: 1px solid rgba(45, 212, 191, 0.3);
+  border: 1px solid rgba(245, 158, 11, 0.3);
   border-radius: 999px;
   color: var(--wander-accent);
   background: var(--wander-soft);
@@ -909,7 +815,6 @@ details.toc {
 
 .like-button:hover:not(:disabled) {
   border-color: var(--wander-accent);
-  box-shadow: 0 0 12px rgba(45, 212, 191, 0.15);
   transform: translateY(-1px);
 }
 

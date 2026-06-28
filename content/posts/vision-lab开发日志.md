@@ -1,7 +1,7 @@
 ---
 title: "1. 升级 pip, setuptools, wheel"
 slug: "vision-lab开发日志"
-date: 1970-01-21T23:10:24+08:00
+date: 2026-06-28T13:24:17+08:00
 draft: false
 source_file: "feishu://vision-lab开发日志"
 source_size: 2503

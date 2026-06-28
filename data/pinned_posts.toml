@@ -10,5 +10,5 @@ path = "Git分布式版本控制工具.md"
 weight = 2
 
 [[posts]]
-path = "C_C++代码中积累的语法.md"
+path = "c-c++代码中积累的语法.md"
 weight = 3

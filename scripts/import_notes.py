@@ -16,21 +16,23 @@ MARKDOWN_IMAGE_RE = re.compile(r"!\[([^\]]*)\]\(([^)]+)\)")
 IMAGE_EXTENSIONS = {".png", ".jpg", ".jpeg", ".gif", ".webp", ".svg", ".bmp"}
 
 TAG_RULES = [
-    ("AI", ["ai", "prompt", "openvino", "openvino", "大模型"]),
-    ("C/C++", ["c++", "c_c++", "cpp"]),
+    ("AI", ["ai", "prompt", "openvino", "大模型", "claude"]),
+    ("C/C++", ["c++", "c_c++", "cpp", "qt"]),
     ("ROS", ["ros1", "ros2", "slam"]),
-    ("机器人", ["自瞄", "视觉", "stm32", "嵌入式", "导航", "相机", "三维", "点云"]),
-    ("算法", ["leetcode", "蓝桥", "kalman", "mpc", "数学建模"]),
-    ("工具", ["git", "docker", "linux", "vscode", "tmux", "sql", "技术栈"]),
-    ("读书", ["文献", "阅读", "深入理解计算机系统", "xv6"]),
-    ("复盘", ["复盘", "备赛", "赛季", "汇报"]),
+    ("机器人", ["自瞄", "视觉", "stm32", "嵌入式", "导航", "相机", "三维", "点云", "机械臂", "jakac5", "吊车", "防碰撞", "vision", "3v3", "7v7", "滤波器", "传感器", "雷达"]),
+    ("算法", ["leetcode", "蓝桥", "kalman", "mpc", "数学建模", "滤波"]),
+    ("工具", ["git", "docker", "linux", "vscode", "tmux", "sql", "技术栈", "ssh", "labelme", "debug", "快捷键", "ch343", "驱动", "数据库", "前后端", "rust", "并发", "cmake", "makefile"]),
+    ("读书", ["文献", "阅读", "深入理解计算机系统", "xv6", "操作系统", "实习报告", "培训", "lab_plant"]),
+    ("复盘", ["复盘", "备赛", "赛季", "汇报", "总结"]),
+    ("面经", ["牛客", "面经", "面试"]),
 ]
 
 CATEGORY_RULES = [
-    ("机器人视觉", ["自瞄", "视觉", "相机", "三维", "点云", "slam", "stm32", "ros"]),
-    ("编程开发", ["c++", "git", "docker", "linux", "vscode", "sql", "rust", "前后端"]),
-    ("算法数学", ["leetcode", "蓝桥", "kalman", "mpc", "数学建模"]),
-    ("学习记录", ["文献", "阅读", "培训", "指南", "复盘", "计划", "汇报", "技术栈"]),
+    ("机器人视觉", ["自瞄", "视觉", "相机", "三维", "点云", "slam", "ros", "吊车", "防碰撞", "完整形态", "3v3", "7v7", "赛季", "机械臂", "jakac5", "导航", "滤波器"]),
+    ("编程开发", ["c++", "git", "docker", "linux", "vscode", "sql", "rust", "前后端", "ssh", "tmux", "qt", "数据库", "并发", "claude", "debug", "快捷键"]),
+    ("算法数学", ["leetcode", "蓝桥", "kalman", "mpc", "数学建模", "滤波"]),
+    ("学习记录", ["文献", "阅读", "培训", "指南", "复盘", "计划", "汇报", "技术栈", "操作系统", "实习报告", "面经", "牛客"]),
+    ("硬件嵌入式", ["stm32", "ch343", "嵌入式", "驱动", "物料", "单片机", "arm"]),
 ]
 
 
@@ -185,6 +187,14 @@ def rewrite_local_image_links(markdown_path: Path, relative_markdown_path: Path,
 
 def front_matter(path: Path, relative_path: Path, text: str, pinned_posts: dict[str, int]) -> str:
     modified = datetime.fromtimestamp(path.stat().st_mtime).astimezone()
+    # Fallback: if file timestamp is epoch-era (pre-2020), use ctime or current time
+    if modified.year < 2020:
+        ctime = datetime.fromtimestamp(path.stat().st_ctime).astimezone()
+        if ctime.year >= 2020:
+            modified = ctime
+        else:
+            modified = datetime.now().astimezone()
+            print(f"  WARN: {relative_path.as_posix()} has broken timestamp, using current time")
     date = modified.isoformat(timespec="seconds")
     title = extract_title(path, text)
     tags = merge_unique(tags_from_relative_path(relative_path), infer_terms(relative_path, title, TAG_RULES))
