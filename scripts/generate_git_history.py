@@ -1,11 +1,22 @@
 """Generate per-file git commit history as Hugo data JSON.
 
-Run before `hugo` build so that layouts can access .Site.Data.git_history.
+Run before `hugo` build so that layouts can access hugo.Data.git_history.
 Requires: git (available), Python 3 stdlib only.
+
+Output format:
+  {
+    "_all": [  ← sorted, deduplicated global commit list (newest first)
+      {"hash": "...", "shortHash": "...", "author": "...", "date": "...",
+       "subject": "...", "files": ["posts/a.md", "posts/b.md"]}
+    ],
+    "posts/foo.md": {"commits": [...]},
+    ...
+  }
 """
 import json
 import subprocess
 import sys
+from collections import defaultdict
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
@@ -49,6 +60,31 @@ def git_log(relative_path: Path) -> list[dict]:
     return commits
 
 
+def build_global_index(file_commits: dict[str, list[dict]]) -> list[dict]:
+    """Merge all per-file commits into a deduplicated, date-sorted global list."""
+    # hash -> merged entry
+    seen: dict[str, dict] = {}
+
+    for hugo_key, commits in file_commits.items():
+        for c in commits:
+            h = c["hash"]
+            if h in seen:
+                seen[h]["files"].append(hugo_key)
+            else:
+                seen[h] = {
+                    "hash": c["hash"],
+                    "shortHash": c["shortHash"],
+                    "author": c["author"],
+                    "date": c["date"],
+                    "subject": c["subject"],
+                    "files": [hugo_key],
+                }
+
+    # Sort newest first by date
+    merged = sorted(seen.values(), key=lambda c: c["date"], reverse=True)
+    return merged
+
+
 def main() -> int:
     if not POSTS_DIR.is_dir():
         print(f"ERROR: posts directory not found: {POSTS_DIR}", file=sys.stderr)
@@ -58,29 +94,49 @@ def main() -> int:
     if not md_files:
         print("No .md files found in content/posts/ — writing empty JSON.")
         OUTPUT_FILE.parent.mkdir(parents=True, exist_ok=True)
-        OUTPUT_FILE.write_text("{}", encoding=ENCODING)
+        OUTPUT_FILE.write_text('{"_all": []}', encoding=ENCODING)
         return 0
 
-    data: dict[str, dict] = {}
+    file_data: dict[str, list[dict]] = {}
     total_commits = 0
 
     for md_path in md_files:
         relative = md_path.relative_to(REPO_ROOT)  # e.g. content/posts/foo.md
         commits = git_log(relative)
-        # Hugo .File.Path is relative to content/  → e.g. posts/foo.md
         hugo_key = str(md_path.relative_to(REPO_ROOT / "content")).replace("\\", "/")
-        data[hugo_key] = {"commits": commits}
+        file_data[hugo_key] = commits
         total_commits += len(commits)
         if not commits:
             print(f"  WARN: no commits for {hugo_key}", file=sys.stderr)
 
+    # Build output
+    global_commits = build_global_index(file_data)
+
+    # Pre-group by date for Hugo templates (which can't mutate variables)
+    by_date: dict[str, list[dict]] = {}
+    for commit in global_commits:
+        day = commit["date"][:10]  # YYYY-MM-DD
+        by_date.setdefault(day, []).append(commit)
+    date_groups = [
+        {"date": day, "commits": commits}
+        for day, commits in by_date.items()
+    ]
+
+    output: dict = {
+        "_all": global_commits,
+        "_by_date": date_groups,
+    }
+    for hugo_key, commits in file_data.items():
+        output[hugo_key] = {"commits": commits}
+
     OUTPUT_FILE.parent.mkdir(parents=True, exist_ok=True)
     OUTPUT_FILE.write_text(
-        json.dumps(data, ensure_ascii=False, indent=2) + "\n",
+        json.dumps(output, ensure_ascii=False, indent=2) + "\n",
         encoding=ENCODING,
     )
 
-    print(f"git_history: {len(data)} files, {total_commits} total commits → {OUTPUT_FILE}")
+    print(f"git_history: {len(file_data)} files, {total_commits} total commits, "
+          f"{len(global_commits)} unique, {len(date_groups)} days → {OUTPUT_FILE}")
     return 0
 
 

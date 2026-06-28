@@ -1133,3 +1133,268 @@ details.toc {
 }
 
 .meta-gitinfo-hash:hover { text-decoration: underline; }
+
+/* ── Unified commits page ──────────────────────── */
+
+.commits-page {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.commits-empty {
+  text-align: center;
+  padding: 48px 20px;
+  color: var(--secondary);
+}
+.commits-empty p { margin: 6px 0; }
+.commits-empty code {
+  font-size: 13px;
+  background: var(--code-bg);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+.commits-empty a {
+  color: var(--wander-accent);
+  text-decoration: none;
+}
+.commits-empty a:hover { text-decoration: underline; }
+
+/* ── Day sections ── */
+
+.commits-day {
+  margin-bottom: 32px;
+}
+
+.commits-day-heading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--primary);
+  padding: 10px 16px;
+  background: var(--entry);
+  border: 1px solid var(--border);
+  border-radius: var(--radius) var(--radius) 0 0;
+  position: sticky;
+  top: 60px;
+  z-index: 5;
+  backdrop-filter: blur(8px);
+}
+.commits-day-heading svg {
+  flex-shrink: 0;
+  color: var(--wander-accent);
+}
+.commits-day-count {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--secondary);
+  margin-left: auto;
+}
+
+/* ── Timeline ── */
+
+.commits-timeline {
+  list-style: none;
+  margin: 0;
+  padding: 12px 0 12px 32px;
+  background: var(--entry);
+  border: 1px solid var(--border);
+  border-top: none;
+  border-radius: 0 0 var(--radius) var(--radius);
+  position: relative;
+}
+.commits-timeline::before {
+  content: "";
+  position: absolute;
+  left: 18px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(
+    180deg,
+    var(--wander-accent) 0%,
+    var(--wander-accent-2) 50%,
+    var(--wander-accent-3) 100%
+  );
+  border-radius: 1px;
+}
+
+.commits-item {
+  display: grid;
+  grid-template-columns: 48px 14px 1fr;
+  align-items: start;
+  gap: 10px;
+  padding: 8px 0;
+  position: relative;
+}
+.commits-item:first-child { padding-top: 0; }
+.commits-item:last-child { padding-bottom: 0; }
+
+.commits-item time {
+  font-size: 12px;
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  color: var(--secondary);
+  text-align: right;
+  white-space: nowrap;
+  padding-top: 4px;
+}
+
+.commits-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--entry);
+  border: 2px solid var(--wander-accent);
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+  margin-top: 5px;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+.commits-item:hover .commits-dot {
+  background: var(--wander-accent);
+  box-shadow: 0 0 8px var(--wander-accent);
+}
+
+/* ── Commit card ── */
+
+.commits-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 8px 12px;
+  transition: border-color 0.2s;
+}
+.commits-item:hover .commits-card {
+  border-color: rgba(245, 158, 11, 0.2);
+}
+
+.commits-card-head {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.commits-hash {
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 12px;
+  color: var(--wander-accent);
+  text-decoration: none;
+  flex-shrink: 0;
+}
+.commits-hash:hover {
+  text-decoration: underline;
+}
+
+.commits-subject {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--primary);
+  line-height: 1.4;
+}
+
+.commits-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 4px;
+  font-size: 12px;
+  color: var(--secondary);
+  flex-wrap: wrap;
+}
+
+.commits-author,
+.commits-files {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.commits-author svg,
+.commits-files svg {
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+
+.commits-file-link {
+  color: var(--secondary);
+  text-decoration: none;
+}
+.commits-file-link:hover {
+  color: var(--wander-accent);
+  text-decoration: underline;
+}
+
+.commits-footer {
+  text-align: center;
+  margin-top: 32px;
+  padding-bottom: 40px;
+}
+
+.commits-full-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 20px;
+  font-size: 14px;
+  color: var(--secondary);
+  text-decoration: none;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  transition: border-color 0.2s, color 0.2s;
+}
+.commits-full-link:hover {
+  color: var(--wander-accent);
+  border-color: var(--wander-accent);
+}
+
+/* ── Mobile ── */
+
+@media screen and (max-width: 768px) {
+  .commits-page {
+    max-width: 100%;
+  }
+
+  .commits-day-heading {
+    font-size: 14px;
+    padding: 8px 12px;
+    top: 50px;
+  }
+
+  .commits-timeline {
+    padding: 8px 0 8px 24px;
+  }
+  .commits-timeline::before {
+    left: 14px;
+  }
+
+  .commits-item {
+    grid-template-columns: 36px 10px 1fr;
+    gap: 8px;
+    padding: 6px 8px;
+  }
+
+  .commits-item time {
+    font-size: 10px;
+  }
+
+  .commits-dot {
+    width: 10px;
+    height: 10px;
+    margin-top: 5px;
+  }
+
+  .commits-card {
+    padding: 6px 10px;
+  }
+
+  .commits-subject {
+    font-size: 12px;
+  }
+
+  .commits-card-meta {
+    gap: 8px;
+    font-size: 10px;
+  }
+}

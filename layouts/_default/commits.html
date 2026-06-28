@@ -1,0 +1,82 @@
+{{- define "main" }}
+{{- /* ── Load git history data (pre-grouped by Python script) ── */ -}}
+{{- $totalCommits := 0 }}
+{{- $dateGroups := slice }}
+{{- if fileExists "data/git_history.json" }}
+  {{- $data := index hugo.Data "git_history" }}
+  {{- if $data }}
+    {{- $all := index $data "_all" | default slice }}
+    {{- $totalCommits = len $all }}
+    {{- $dateGroups = index $data "_by_date" | default slice }}
+  {{- end }}
+{{- end }}
+
+<header class="page-header">
+  {{- partial "breadcrumbs.html" . }}
+  <h1>{{ .Title }}</h1>
+  <div class="post-description">
+    {{- if gt $totalCommits 0 }}
+    共 {{ $totalCommits }} 次提交
+    {{- else }}
+    提交数据不可用（本地开发或 JSON 未生成）。
+    {{- end }}
+  </div>
+</header>
+
+{{- if eq $totalCommits 0 }}
+<div class="post-content">
+  <div class="commits-empty">
+    <p>提交历史由 <code>scripts/generate_git_history.py</code> 在构建前生成。</p>
+    <p>运行 <code>python3 scripts/generate_git_history.py</code> 然后在本地启动 Hugo 即可查看。</p>
+    <p><a href="https://github.com/hydarealman/wander/commits/main" target="_blank" rel="noopener">在 GitHub 上查看完整历史 →</a></p>
+  </div>
+</div>
+{{- else }}
+
+<div class="commits-page">
+  {{- range $dateGroups }}
+  <section class="commits-day">
+    <h2 class="commits-day-heading">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      <span>{{ .date }}</span>
+      <span class="commits-day-count">{{ len .commits }} 次提交</span>
+    </h2>
+    <ol class="commits-timeline">
+      {{- range .commits }}
+      <li class="commits-item">
+        <time datetime="{{ .date }}">{{ dateFormat "15:04" (time .date) }}</time>
+        <div class="commits-dot"></div>
+        <div class="commits-card">
+          <div class="commits-card-head">
+            <a class="commits-hash" href="https://github.com/hydarealman/wander/commit/{{ .hash }}" target="_blank" rel="noopener" title="在 GitHub 查看此次提交">{{ .shortHash }}</a>
+            <span class="commits-subject">{{ .subject }}</span>
+          </div>
+          <div class="commits-card-meta">
+            <span class="commits-author">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              {{ .author }}
+            </span>
+            {{- if .files }}
+            <span class="commits-files">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              影响 {{ len .files }} 个文档
+            </span>
+            {{- end }}
+          </div>
+        </div>
+      </li>
+      {{- end }}
+    </ol>
+  </section>
+  {{- end }}
+</div>
+
+<div class="commits-footer">
+  <a href="https://github.com/hydarealman/wander/commits/main" target="_blank" rel="noopener" class="commits-full-link">
+    在 GitHub 上查看完整历史
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+  </a>
+</div>
+{{- end }}
+
+{{- end }}

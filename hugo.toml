@@ -121,6 +121,12 @@ buildExpired = false
   weight = 20
 
 [[menu.main]]
+  identifier = "commits"
+  name = "历史"
+  url = "/commits/"
+  weight = 28
+
+[[menu.main]]
   identifier = "archives"
   name = "归档"
   url = "/archives/"
