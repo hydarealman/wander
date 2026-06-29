@@ -1,13 +1,11 @@
 from pathlib import Path
 from datetime import datetime
 import re
-import tomllib
 
 
 SOURCE_DIR = Path(r"D:\notes")
 DEST_DIR = Path(r"D:\wander\content\posts")
 STATIC_MEDIA_DIR = Path(r"D:\wander\static\media")
-PINNED_POSTS_FILE = Path(r"D:\wander\data\pinned_posts.toml")
 
 FRONT_MATTER_RE = re.compile(r"\A(?:---|\+\+\+)\s*\n.*?\n(?:---|\+\+\+)\s*\n?", re.S)
 HEADING_RE = re.compile(r"^\s*#\s+(.+?)\s*#*\s*$", re.M)
@@ -129,20 +127,6 @@ def merge_unique(*groups: list[str]) -> list[str]:
     return values
 
 
-def load_pinned_posts() -> dict[str, int]:
-    if not PINNED_POSTS_FILE.exists():
-        return {}
-
-    data = tomllib.loads(PINNED_POSTS_FILE.read_text(encoding="utf-8"))
-    pinned = {}
-    for item in data.get("posts", []):
-        path = str(item.get("path", "")).replace("\\", "/").strip()
-        weight = int(item.get("weight", 100))
-        if path:
-            pinned[path] = weight
-    return pinned
-
-
 def slug_from_relative_path(relative_path: Path) -> str:
     raw = "-".join(relative_path.with_suffix("").parts).lower()
     raw = raw.replace("\\", "-").replace("/", "-")
@@ -214,7 +198,7 @@ def rewrite_local_image_links(markdown_path: Path, relative_markdown_path: Path,
     return MARKDOWN_IMAGE_RE.sub(replace, text), copied, remote
 
 
-def front_matter(path: Path, relative_path: Path, text: str, pinned_posts: dict[str, int]) -> str:
+def front_matter(path: Path, relative_path: Path, text: str) -> str:
     modified = datetime.fromtimestamp(path.stat().st_mtime).astimezone()
     # Fallback: if file timestamp is epoch-era (pre-2020), use ctime or current time
     if modified.year < 2020:
@@ -228,7 +212,6 @@ def front_matter(path: Path, relative_path: Path, text: str, pinned_posts: dict[
     title = extract_title(path, text)
     tags = merge_unique(tags_from_relative_path(relative_path), infer_terms(relative_path, title, TAG_RULES))
     categories = infer_terms(relative_path, title, CATEGORY_RULES)
-    pinned_weight = pinned_posts.get(relative_path.as_posix())
     source_size = path.stat().st_size
     source_lines = text.count("\n") + 1 if text else 0
 
@@ -242,12 +225,6 @@ def front_matter(path: Path, relative_path: Path, text: str, pinned_posts: dict[
         f"source_size: {source_size}",
         f"source_lines: {source_lines}",
     ]
-
-    if pinned_weight is not None:
-        lines.extend([
-            "pinned: true",
-            f"weight: {pinned_weight}",
-        ])
 
     if tags:
         lines.append("tags:")
@@ -267,7 +244,7 @@ def front_matter(path: Path, relative_path: Path, text: str, pinned_posts: dict[
     return "\n".join(lines) + "\n\n"
 
 
-def import_file(path: Path, pinned_posts: dict[str, int]) -> Path:
+def import_file(path: Path) -> Path:
     relative_path = path.relative_to(SOURCE_DIR)
     destination = DEST_DIR / relative_path
     text = read_text(path)
@@ -276,7 +253,7 @@ def import_file(path: Path, pinned_posts: dict[str, int]) -> Path:
     body = apply_heading_heuristic(body)
 
     destination.parent.mkdir(parents=True, exist_ok=True)
-    destination.write_text(front_matter(path, relative_path, text, pinned_posts) + body, encoding="utf-8", newline="\n")
+    destination.write_text(front_matter(path, relative_path, text) + body, encoding="utf-8", newline="\n")
     return destination, copied_images, remote_images
 
 
@@ -286,20 +263,18 @@ def main() -> None:
 
     DEST_DIR.mkdir(parents=True, exist_ok=True)
     markdown_files = sorted(SOURCE_DIR.rglob("*.md"))
-    pinned_posts = load_pinned_posts()
 
     imported = 0
     copied_images = 0
     remote_images = 0
     for path in markdown_files:
         if path.is_file():
-            _, file_copied_images, file_remote_images = import_file(path, pinned_posts)
+            _, file_copied_images, file_remote_images = import_file(path)
             imported += 1
             copied_images += file_copied_images
             remote_images += file_remote_images
 
     print(f"Imported {imported} Markdown files")
-    print(f"Applied {len(pinned_posts)} pinned post rules")
     print(f"Copied {copied_images} local images")
     print(f"Kept {remote_images} remote image links")
     print(f"Source: {SOURCE_DIR}")

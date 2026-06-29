@@ -43,9 +43,22 @@
 {{- if .IsHome }}
 {{- $pages = where site.RegularPages "Type" "in" site.Params.mainSections }}
 {{- $pages = where $pages "Params.hiddenInHomeList" "!=" "true" }}
-{{- $pinned := sort (where $pages "Params.pinned" true) "Weight" "asc" }}
-{{- $normal := sort (where $pages "Params.pinned" "!=" true) "Date" "desc" }}
-{{- $pages = union $pinned $normal }}
+{{- /* Sort: pinned first (by weight from data/pinned_posts.toml), then by date */ -}}
+{{- $pinnedPages := slice }}
+{{- $normalPages := slice }}
+{{- range $pages }}
+  {{- $w := partial "pinned_weight.html" . | int }}
+  {{- if gt $w 0 }}
+    {{- $pinnedPages = $pinnedPages | append (dict "page" . "pin_weight" $w) }}
+  {{- else }}
+    {{- $normalPages = $normalPages | append . }}
+  {{- end }}
+{{- end }}
+{{- $pinnedPages = sort $pinnedPages "pin_weight" "asc" }}
+{{- $normalPages = sort $normalPages "Date" "desc" }}
+{{- $sortedPinned := slice }}
+{{- range $pinnedPages }}{{ $sortedPinned = $sortedPinned | append .page }}{{ end }}
+{{- $pages = union $sortedPinned $normalPages }}
 {{- end }}
 
 {{- $paginator := .Paginate $pages }}
@@ -62,7 +75,8 @@
 {{- if $term }}
 {{- $class = "post-entry tag-entry" }}
 {{- end }}
-{{- if .Param "pinned" }}
+{{- $isPinned := gt (partial "pinned_weight.html" . | int) 0 }}
+{{- if $isPinned }}
 {{- $class = printf "%s is-pinned" $class }}
 {{- end }}
 
@@ -72,7 +86,7 @@
   <header class="entry-header">
     <h2 class="entry-hint-parent">
       <span>{{- .Title }}</span>
-      {{- if .Param "pinned" }}
+      {{- if $isPinned }}
       <span class="entry-badge">置顶</span>
       {{- else if .Draft }}
       <span class="entry-hint" title="Draft">

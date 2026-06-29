@@ -16,8 +16,8 @@
     "sourceSize" (default 0 (index .Params "source_size"))
     "sourceLines" (default 0 (index .Params "source_lines"))
     "sourceFile" (default "" (index .Params "source_file"))
-    "pinned" (default false .Params.pinned)
-    "weight" (default 1000 .Weight)
+    "pinned" (gt (partial "pinned_weight.html" . | int) 0)
+    "weight" (or (partial "pinned_weight.html" . | int) 1000)
     "tags" $tags
     "categories" $categories
   ) -}}

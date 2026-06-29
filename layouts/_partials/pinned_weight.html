@@ -1,0 +1,2 @@
+{{- $pin := index (hugo.Data.pinned_posts | default dict) .File.BaseFileName | default dict -}}
+{{- with $pin.weight }}{{ . }}{{ else }}0{{ end -}}
