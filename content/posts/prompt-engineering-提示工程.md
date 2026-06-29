@@ -1,23 +1,23 @@
 ---
-title: "prompt-engineering-提示工程"
+title: "Prompt Engineering 提示工程"
 slug: "prompt-engineering-提示工程"
-date: 2026-06-28T12:44:45+08:00
+date: 1970-01-21T23:10:23+08:00
 draft: false
 source_file: "feishu://prompt-engineering-提示工程"
-source_size: 4697
+source_size: 4731
 source_lines: 186
 tags:
   - "AI"
 categories: []
 ---
 
-Prompt Engineering 提示工程
-## 1. 什么是提示词工程
+# Prompt Engineering 提示工程
+# 1.什么是提示词工程
 
 当前是AGI时代
 AGI Artificial General Intelligence 通用人工智能
 
-我们在提示工程上的优势
+## 我们在提示工程上的优势
 我们懂原理,所以知道
 为什么有的指令有效,有的指令无效
 为什么同样的指令有时有效,有时无效
@@ -28,14 +28,14 @@ AGI Artificial General Intelligence 通用人工智能
 能完成和业务系统的对接,把效能发挥到极致
 
 
-使用Prompt的两种目的
-## 1. 获得具体问题的具体结果
-## 2. 固化一套Prompt到程序,成为系统功能的一部分
+## 使用Prompt的两种目的
+1.获得具体问题的具体结果
+2.固化一套Prompt到程序,成为系统功能的一部分
 
 后者更难,掌握后能轻松搞定前者
 后者是我们的独特优势
 
-Prompt调优
+## Prompt调优
 找到好的prompt是个持续迭代的过程,需要不断调优
 
 高质量prompt核心要点: 
@@ -50,8 +50,8 @@ image.png
 
 
 
-## 2. Prompt的典型构成
-模板建议1 -> 来自吴恩达: 
+# 2.Prompt的典型构成
+### 模板建议1 -> 来自吴恩达:
 角色: 
 给AI定义一个最匹配任务的角色, 比如: 你是一位软件工程师 你是一位小学老师
 
@@ -85,11 +85,11 @@ image.png
 
 
 
-模板建议2 -> 来自字节: 
+### 模板建议2 -> 来自字节:
 浅层的提示词工程
-## 1. 明确目标: 首先确定你希望大模型或者机器人为你做什么是写一个营销方案还是智能回答
-## 2. 优化提示: 我们可以给大模型更加具体的提示,让大模型知道自己是干啥的
-## 3. 评估并迭代: 通过不同的提示词来问同样的问题,看大模型是如何反馈的,如果不满意的话可以修改提示词,然后再次尝试,不要怕麻烦,直到它可以反馈出让我们满意的答案或者反馈出更适合应用场景的答案
+1.明确目标: 首先确定你希望大模型或者机器人为你做什么是写一个营销方案还是智能回答
+2.优化提示: 我们可以给大模型更加具体的提示,让大模型知道自己是干啥的
+3.评估并迭代: 通过不同的提示词来问同样的问题,看大模型是如何反馈的,如果不满意的话可以修改提示词,然后再次尝试,不要怕麻烦,直到它可以反馈出让我们满意的答案或者反馈出更适合应用场景的答案
 
 
 深层的提示词工程 -> 属于开发层面
@@ -106,24 +106,24 @@ N-gram
 
 
 
-## 3. 如何编写提示词
+# 3.如何编写提示词
 
 
 
 gemini自己生成的自己的Prompt模板: 
 
-## 1. 当前 Lab 与任务： [例如：Lab 3 Page tables，任务 2：A kernel page table per process]
-## 2. 我的目标： [例如：我想在 allocproc() 中为每个进程分配一个独立的内核页表，并拷贝全局内核页表的内容。]
-## 3. 遇到的问题 (Expected vs. Actual)： [例如：编译通过了，但在运行 make qemu 时，系统在启动 init 进程时发生了 Panic。]
-## 4. 报错日志 / 终端输出：
+1. 当前 Lab 与任务： [例如：Lab 3 Page tables，任务 2：A kernel page table per process]
+2. 我的目标： [例如：我想在 allocproc() 中为每个进程分配一个独立的内核页表，并拷贝全局内核页表的内容。]
+3. 遇到的问题 (Expected vs. Actual)： [例如：编译通过了，但在运行 make qemu 时，系统在启动 init 进程时发生了 Panic。]
+4. 报错日志 / 终端输出：
 Plaintext
 [粘贴你的 QEMU panic 信息、usertrap/kerneltrap 报错、或者 make grade 的失败提示。包含 scause, sepc, stval 等寄存器信息非常关键！]
-## 5. 相关的代码片段：
+5. 相关的代码片段：
 C
 // [在这里贴上你修改过的代码，最好带上函数名和一点上下文]struct trapframe *trapframe = p->trapframe;
 // ...你的代码...
-## 6. 我的思考与尝试 (非常重要)： [例如：我怀疑是因为在 scheduler() 切换页表时，satp 寄存器没有正确刷新，但我加了 sfence.vma 还是不行。]
-## 7. 我的诉求： [例如：请帮我指出代码逻辑的漏洞 / 请给我一个 debug 的思路 / 请解释一下 walk() 函数的第三个参数是什么意思。]
+6. 我的思考与尝试 (非常重要)： [例如：我怀疑是因为在 scheduler() 切换页表时，satp 寄存器没有正确刷新，但我加了 sfence.vma 还是不行。]
+7. 我的诉求： [例如：请帮我指出代码逻辑的漏洞 / 请给我一个 debug 的思路 / 请解释一下 walk() 函数的第三个参数是什么意思。]
 
 
 
@@ -134,21 +134,21 @@ C
 
 
 
-## 4. 进阶技巧
-思维链
+# 4.进阶技巧
+## 思维链
 image.png
 
 
 
 
-自洽性 (Self-Consistency)
+## 自洽性 (Self-Consistency)
 image.png
 
 
 
 
 
-思维树(Tree-of-thought,ToT)
+## 思维树(Tree-of-thought,ToT)
 image.png
 
 

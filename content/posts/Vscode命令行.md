@@ -1,10 +1,10 @@
 ---
 title: "Vscode命令行"
 slug: "vscode命令行"
-date: 2026-06-13T11:05:24+08:00
+date: 1970-01-21T23:10:23+08:00
 draft: false
 source_file: "feishu://vscode命令行"
-source_size: 6172
+source_size: 6217
 source_lines: 192
 tags:
   - "工具"
@@ -12,26 +12,26 @@ categories:
   - "编程开发"
 ---
 
-Vscode命令行
-单文件编译
+# Vscode命令行
+### 单文件编译
 g++ -o 输出文件名 源文件.cpp
 指定输出可执行文件名为...: 要编译的源文件名
 或者 g++ 源文件.cpp -o 输出文件名
 将要编译的源文件: 指定输出可执行文件名
-调试支持
+### 调试支持
 g++ -g -o hello hello.cpp  # 便于后续使用GDB调试[4,9](@ref)
 
-运行命令
+### 运行命令
 Windows:
 .\输出文件名.exe  # 例如 .\hello.exe[1,2](@ref)
 Linux/macOS系统​：
 ./输出文件名  # 例如 ./hello[1,5](@ref)
 
-编译与运行组合命令
+### 编译与运行组合命令
 g++ -o hello hello.cpp && .\hello.exe  # Windows
 g++ -o hello hello.cpp && ./hello     # Linux/macOS[8](@ref)
 
-多文件编译
+### 多文件编译
 同时编译多个源文件
 g++ -o program main.cpp utils.cpp helper.cpp  # 将多个.cpp文件编译为单一可执行文件[8](@ref)
 分布编译(适合大型项目)
@@ -42,8 +42,8 @@ g++ -o program main.cpp utils.o helper.o  # 链接所有对象文件[6](@ref)
 
 
 
-调试:
-断点调试
+### 调试:
+#### 断点调试
 单步跳过: 执行当前行代码.如果该行包含函数调用,不进入函数内部,直接得到结果并跳到下一行
 F10
 单步进入: 执行当前行代码,如果该行包含函数调用,会进入该函数内部,并暂停在函数的第一行
@@ -156,7 +156,7 @@ VSCode: 在”断点“窗口查看
 用途: 退出GDB
 VSCode: 停止调试按钮
 
-调试流程
+#### 调试流程
 1.配置编译任务
 按ctrl+shift+p,输入"Tasks: Configure Task" , 选择"Create tasks.json file from templates",选择"Others"或"C/C++ g++ buikd active file" ,这回生成一个tasks.json,然后问ai生成一个调试文件
 
@@ -178,7 +178,7 @@ VSCode: 停止调试按钮
 函数断点
 
 
-常见调试方法
+#### 常见调试方法
 1.打印语句 (快速查看变量值,执行流程) -> 简单逻辑排查,快速确认执行到哪,变量是什么值
 
 std::cout << "x = " << x << std::endl;
@@ -200,6 +200,6 @@ GDB: print variable, print *ptr@10; IDE: 悬停观察，监视(Watch)窗口
 7.内存检查工具 -> 检查内存泄漏,越界访问等内存错误 -> 程序运行崩溃,怀疑有内存相关错误时
 
 
-make编译
+### make编译
 
 

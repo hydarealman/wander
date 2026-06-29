@@ -1,10 +1,10 @@
 ---
 title: "lab技术栈"
 slug: "lab技术栈"
-date: 2026-06-13T11:05:24+08:00
+date: 1970-01-21T23:10:24+08:00
 draft: false
 source_file: "feishu://lab技术栈"
-source_size: 1389
+source_size: 1447
 source_lines: 52
 tags:
   - "工具"
@@ -12,37 +12,37 @@ categories:
   - "学习记录"
 ---
 
-lab技术栈
-三维重建: 
+# lab技术栈
+## 三维重建:
 MVS（多视图立体） 
 SfM（运动恢复结构）
 LIDAR SLAM
 
-### 机器学习:
+#### 机器学习:
 传统机器学习：随机森林、支持向量机(SVM)、岭回归(BLUP)
 深度学习：基于多层神经网络的端到端学习方法
 
-### 深度学习:
+#### 深度学习:
 卷积神经网络 (CNN)：ResNet、U-Net、YOLO系列、Mask R-CNN
 循环神经网络 (RNN)：LSTM、GRU
 Transformer：ViT (Vision Transformer)、Cropformer
 点云神经网络：PointNet++
 时序卷积网络：TCN
 
-### 计算机视觉
+#### 计算机视觉
 
-### 目标检测与实例分割: YOLO系列,Mask R-CNN
-语义分割: U-Net,DeepLabV3+
-实例分割：Mask R-CNN
-图像分类与特征提取: ResNet,ViT (Vision Transformer)
-密度估计: 密度回归网络
+##### 目标检测与实例分割: YOLO系列,Mask R-CNN
+##### 语义分割: U-Net,DeepLabV3+
+##### 实例分割：Mask R-CNN
+##### 图像分类与特征提取: ResNet,ViT (Vision Transformer)
+##### 密度估计: 密度回归网络
 
-时序建模:
+#### 时序建模:
 LSTM
 GRU
 TCN (时间卷积网络)
 
-多模态融合:
+### 多模态融合:
 多任务学习
 跨模态注意力机制
 数据融合 / 特征融合 / 结果融合

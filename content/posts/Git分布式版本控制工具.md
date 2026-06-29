@@ -1,12 +1,10 @@
 ---
 title: "Git分布式版本控制工具"
 slug: "git分布式版本控制工具"
-date: 2026-06-13T11:05:24+08:00
+date: 1970-01-21T23:10:23+08:00
 draft: false
-pinned: true
-weight: 2
 source_file: "feishu://git分布式版本控制工具"
-source_size: 4044
+source_size: 4078
 source_lines: 167
 tags:
   - "工具"
@@ -14,8 +12,8 @@ categories:
   - "编程开发"
 ---
 
-Git分布式版本控制工具
-1.基本命令行
+# Git分布式版本控制工具
+## 1.基本命令行
 ls/ll   查看当前目录
 
 cat    查看文件内容
@@ -24,7 +22,7 @@ touch  创建文件
 
 vi       vi编辑器
 
-2.创建.bashrc文件
+## 2.创建.bashrc文件
 打开用户目录,创建.bashrc文件
 在.bashrc文件中输入
 
@@ -35,7 +33,7 @@ alias git-log='git log --pretty=oneline --all --graph --abbrev-commit'
 alias ll='ls -al'
 
 
-3.解决GitBash乱码问题
+## 3.解决GitBash乱码问题
 1.打开GitBash执行下面指令
 Git config --global core.quotepath false
 
@@ -44,7 +42,7 @@ Git config --global core.quotepath false
 export LANG="zh_CN.UTF-8"
 export LC_ALL="zh_CN.UTF-8"
 
-4 获取本地仓库
+## 4 获取本地仓库
 1) 在电脑的任意位置创建一个空目录作为我们的本地Git仓库
 2) 进入这个目录中,电机右键Git bash窗口
 3) 执行命令git init
@@ -77,7 +75,7 @@ git reflog                           (查看已经删除的记录)
 5.添加文件至忽略列表
 --pretty=oneline 
 
-5.修改用户名和邮箱地址
+## 5.修改用户名和邮箱地址
 修改用户名: 
 
 git config --global user.name "hydarealman"
@@ -85,12 +83,12 @@ git config --global user.name "hydarealman"
 
 git config --global user.email 2281306133@qq.com
 
-6.如何查看git的邮箱地址和用户名是否配置成功
+## 6.如何查看git的邮箱地址和用户名是否配置成功
 可以在这个路径下面找到: 
 路径地址
 C:\Users\dong
 
-朋友给的笔记
+## 朋友给的笔记
 git init //初始化仓库
 
 git add .
@@ -103,7 +101,7 @@ git push origin main
 
 
 
-将我的代推送到我的仓库
+## 将我的代推送到我的仓库
 
 # 第一次提交
 git init
@@ -124,7 +122,7 @@ git push
 
 
 
-使用git diff查看两段代码的差异
+## 使用git diff查看两段代码的差异
 使用git diff对比两个文件的差异
 文件A为旧文件
 文件B为新文件
@@ -133,7 +131,7 @@ code --diff 文件夹A/ 文件夹B/
 
 
 
-虚拟机上使用SSH  git推送到github仓库
+## 虚拟机上使用SSH  git推送到github仓库
 
 # 在 Ubuntu 虚拟机中执行
 
@@ -156,7 +154,7 @@ git remote set-url origin git@github.com:hydarealman/AimScope.git
 git push -u origin main
 
 
-代码回滚: 
+## 代码回滚:
 查看版本历史,找到目标提交的哈希值
 
 git log --oneline

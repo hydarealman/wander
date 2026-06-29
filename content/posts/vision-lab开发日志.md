@@ -1,71 +1,71 @@
 ---
 title: "vision-lab开发日志"
 slug: "vision-lab开发日志"
-date: 2026-06-28T13:24:17+08:00
+date: 1970-01-21T23:10:24+08:00
 draft: false
 source_file: "feishu://vision-lab开发日志"
-source_size: 2503
+source_size: 2601
 source_lines: 159
 tags: []
 categories: []
 ---
 
-vision-lab开发日志
-开发日志:
-lab_huofu:
+# vision-lab开发日志
+## 开发日志:
+### lab_huofu:
 5月28日 & 5月29日 % 5月30日
 完成霍夫圆识别水质圆圈的程序
 使用pca 分析试剂的色值
 并做线性回归
 
 
-lab_water:
-6月7日:
-拷贝程序
+### lab_water:
+#### 6月7日:
+### 拷贝程序
 
 
-6月8日:
+#### 6月8日:
 测试水质分析仪的摄像头
 
-6月13日:
+#### 6月13日:
 浏览项目框架
 阅读项目qt程序
 
 好像没什么难度
 
 
-lab_plant:
-5月28日 ~ 6月6日：
+### lab_plant:
+#### 5月28日 ~ 6月6日：
 购买材料:  
 在自己电脑上测试代码
 
-6月7日：
+#### 6月7日：
 环境部署：
 lubancat
 烧录镜像 环境部署
 
 
-6月8日 ~ 6月16日：
+#### 6月8日 ~ 6月16日：
 准备考试
 
-6月17日:
+#### 6月17日:
 继续部署环境 尝试运行代码
 
 
-lab_water项目
+## lab_water项目
 
 
 
-lab_huofu项目
+## lab_huofu项目
 
 
 
 
-lab_plant项目
+## lab_plant项目
 
 
 
-环境配置: 
+### 环境配置:
 更新系统底层软件源：
 
 sudo apt update && sudo apt upgrade -y
@@ -127,8 +127,8 @@ rm -rf lab_plant.zip
 
 
 
-bug:
-6月17日
+### bug:
+#### 6月17日
 千万不要运行
 
 sudo ifconfig eth0 down
@@ -145,20 +145,20 @@ sudo ifconfig eth0 down
 
 
 
-知识点
+## 知识点
 
-三维点云测量
-概述
+### 三维点云测量
+#### 概述
 安装PCL
 安装Open3D
 安装CloudCompare
 
 
-激光三角测距: 
+#### 激光三角测距:
 线激光器向物体表面投射一条激光线,当物体表面有高低起伏时,激光线会发生弯曲和位移,相机(与激光器成固定角度)捕捉到这条变形激光线的二维图像,通过三角测量法计算出每个点亮度的中心点,最终拼接成完整的三维点云
 
 
-RANSAC (Random Sample Consensus)：随机采样一致性算法
+#### RANSAC (Random Sample Consensus)：随机采样一致性算法
 随机采样一致性算法，从包含大量离群点的数据中拟合数学模型
 
 

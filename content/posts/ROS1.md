@@ -1,10 +1,10 @@
 ---
 title: "ROS1"
 slug: "ros1"
-date: 2026-06-13T11:05:24+08:00
+date: 1970-01-21T23:10:23+08:00
 draft: false
 source_file: "feishu://ros1"
-source_size: 26366
+source_size: 26450
 source_lines: 789
 tags:
   - "ROS"
@@ -12,11 +12,11 @@ categories:
   - "机器人视觉"
 ---
 
-ROS1
+# ROS1
 
 学习网址
 https://bluesnie.github.io/Learning-notes/ROS2/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E7%AF%87/%E7%AC%AC7%E7%AB%A0-ROS2%E8%BF%90%E5%8A%A8%E5%AD%A6/001-TF2%E4%BB%8B%E7%BB%8D%E5%8F%8ARVIZ-TF%E7%BB%84%E4%BB%B6.html
-创建工作空间功能包流程
+## 创建工作空间功能包流程
 遇到的bug: 
 最开始改CMakeLists.txt文件时改错文件了,而且居然改的时候有使用超级用户权限,应该改的文件是功能包的CMakeLists.txt文件，而不是工作空间的CMakeLists.txt文件,这个文件是自动生成的,后来意识到这个问题,但是改的时候一直没有意识到权限不够,我以为我改了实际上我没有更改成功,最后知道新开了一个工作空间重新编译才发现这个报了一摸一样的错误,才发现,之前一直以为是路径错误.
 
@@ -115,7 +115,7 @@ rospack find my_robot  # 查找功能包路径
 roscd my_robot         # 切换到功能包目录
 rosls my_robot         # 列出功能包内容
 
-ros::spin()和ros::spinOnce()的区别
+## ros::spin()和ros::spinOnce()的区别
 ros::spin() 
 阻塞行为: 阻塞,调用后不返回,持续处理回调
 循环机制: 内部自带无限循环,直到节点关闭
@@ -132,7 +132,7 @@ ros::spinceOnce()
 后续代码: 其后的代码会继续执行
 
 
-roscore的作用
+## roscore的作用
 roscore是ROS系统的总指挥部和信息中心,它提供了节点之间通信所必须的基础设施
 ROS Master: 
 作用: 管理所有节点的注册,发现和连接,充当节点通信的"名称服务"和"协调员"
@@ -143,7 +143,7 @@ rosout节点:
 
 roscore为ROS的分布式计算提供了核心的通信基础设施.在ROS1中,任何节点在启动时都需要向ROS Master注册,并通过它来发现其他节点,从而建立点对点的直接通信,没有roscore,节点就像失去了通讯录和电话号码,节点就像失去了通讯录和电话号码的员工，无法找到彼此并进行协作
 
-ros::spinceOnce()和ros::spin()的区别
+## ros::spinceOnce()和ros::spin()的区别
 
 ros::spin()
 阻塞式: 进入一个无限循环,持续处理ROS回调
@@ -155,14 +155,14 @@ ros::spinceOnce()
 继续执行：调用后程序会继续执行后面的代码
 适用于: 需要在循环中同时处理回到和执行其他任务的节点
 
-ROS的并发模型
+## ROS的并发模型
 ros::spin()不会阻塞其他节点: 
 每个节点是独立进程： ROS节点是独立的进程,每个节点有自己的执行线程
 ros的通信是异步的: 节点间的消息传递通过ROS Master和话题/服务实现,不依赖对方节点的执行装填
 
 ros::spin()只阻塞当前节点: 它只影响调用它的节点,不会影响系统中其他节点的运行
-ROS工具类: 
-1.ros::Rate
+## ROS工具类:
+### 1.ros::Rate
 ros::Rate是ROS中一个非常重要的实用工具类,用于控制循环(尤其是主循环)的执行频率(速率). 它的目的是让循环以尽可能接近的固定频率运行
 
 没有速率控制: 
@@ -176,7 +176,7 @@ ros::Rate loop_rate(10); // 期望以10Hz(每秒10次)运行
 while(ros::ok()) {
 loop_rate.sleep(); // 关键! 在这里睡眠以控制速率
 
-2.时间相关
+### 2.时间相关
 ros::Time： 表示一个时间点，它由秒和纳秒两部分组成,通常用于时间戳
 
 ros::Duration: 表示一个时间段或事件间隔, 它也由秒和纳秒组成
@@ -203,24 +203,24 @@ int main(int argc, char** argv) {
   return 0;
 }
 
-3.tf
+### 3.tf
 tf2_ros::TransformListener       用于侦听和缓存由 TransformBroadcaster发布的坐标变换(tf)数据
 
 tf2_ros::TransformBroadcaster  用于发布坐标变换关系
 
 tf2::doTransform()和tfBuffer.transform() 用于执行实际的坐标变换,将一个点或姿态从一个坐标系转换到另一个坐标系
 
-4.日志与诊断
+### 4.日志与诊断
 ROS_INFO(),ROS_WARN(),ROS_ERROR(),ROS_FATAL()（通常用于导致节点无法继续运行的致命错误）
 这些是宏,而不是类,但极其常用,它们提供了不同级别的日志输出功能，替代了std::cout
 输出会带有时间戳,节点名,消息级别等信息,非常利于调试
 
-5.节点句柄与参数服务
+### 5.节点句柄与参数服务
 ros::NodeHandle
 这是你与ROS系统交互的主要入口,几乎所有操作(创建发布者/订阅者,获取/设置参数,创建定时器等)都需要通过它
 它提供了访问参数服务器的方法
 
-6.多线程处理(Spinners)
+### 6.多线程处理(Spinners)
 用于处理回调函数,特别是在有多个订阅或服务时
 ros::MultiThreadedSpinner spinner(4);
 使用一个线程池来处理回调,可以并行处理多个回调。如果一个回调函数执行时间很长,它不会阻塞其他回调的执行
@@ -237,7 +237,7 @@ nh.param<std::string>("robot_name", robot_name, default_name);
 // 设置参数
 nh.setParam("control_frequency", 30.0);
 
-录制与回放数据步骤
+## 录制与回放数据步骤
 
 1.启动节点并列出话题
 
@@ -292,7 +292,7 @@ rosbag的局限性
 
 
 
-超级终端
+## 超级终端
 安装: 
 
 sudo apt install terminator
@@ -306,7 +306,7 @@ ibus-setup
 把占用的快捷键给去除掉
 
 
-ROSTF广播
+## ROSTF广播
 一,核心概念：
 1.坐标系(Frame):
 .以字符串
@@ -414,7 +414,7 @@ rosrun tf tf_echo source_frame target_frame
 3.使用tf2替代旧版tf
 
 
-TF时间戳
+## TF时间戳
 一，时间戳的核心作用:
 1.时空一致性
 每个变换,必须携带时间戳,表示该位姿数据的有效时刻
@@ -451,7 +451,7 @@ if (tfBuffer.canTransform("map", "base_link", ros::Time::now(), ros::Duration(5.
 
 
 
-清理ROS日志
+## 清理ROS日志
 1.检查当前日志大小:
 
 rosclean check
@@ -475,13 +475,13 @@ rostopic echo /rosout
 检查ROS日志配置
 rosrun rqt_console rqt_console
 
-ROS常用组件
+## ROS常用组件
 演示小乌龟
 roslaunch turtle_tf2 turtle_tf2_demo_cpp.launch
 或者(上面的是cpp节点写的,下面的是python节点写的)
 roslaunch turtle_tf2 turtle_tf2_demo.launch
-TF坐标变换(TransForm Frame)
-概述
+### TF坐标变换(TransForm Frame)
+### 概述
 TF坐标变换: 实现不同类别的坐标系之间的转换
 (因为不可以将物体相对于该传感器的方位信息,等价于机器人系统或机器人其他组件的方位信息) -> 所以需要坐标系之间的变换
 
@@ -497,7 +497,7 @@ tf2_geometry_msgs 可以将ROS消息转换为tf2消息
 tf2: 封装了坐标系变换常用消息    四元数 <-> 欧拉角
 tf2_ros: 为tf2提供了rscpp和rospy绑定,封装了坐标变换常用的API
 
-坐标msg消息
+### 坐标msg消息
 在坐标转换实现中常用的msg:
 geometry_msgs/TransformStamped 和 geometry_msgs/PointStamped
 前者用于传输坐标系相关位置信息,后者用于传输某个坐标系内坐标点的信息,在坐标变换中,频繁的需要使用坐标系的相对位置以及坐标点的信息 
@@ -533,7 +533,7 @@ geometry_msgs/Point point             # 点坐标 (x,y,z坐标)
   float64 y                       
   float64 z
 
-静态坐标变换
+### 静态坐标变换
 指两个坐标系之间的相对位置是固定的
 实现分析: 
 1.坐标系相对关系,可以通过发布方发布
@@ -759,7 +759,7 @@ rosrun tf2_ros static_trasform_publisher 0.2 0 05 0 0 0 /baselink/laser
 
 
 
-动态坐标变换
+### 动态坐标变换
 实现流程: 
 1.新建功能包,添加依赖
 2.创建坐标相对关系发布方(同时需要订阅乌龟位姿信息)
@@ -782,7 +782,7 @@ rosrun tf2_ros static_trasform_publisher 0.2 0 05 0 0 0 /baselink/laser
                                    
 
 
-rviz
+## rviz
 
 tf:
 x轴: 红色 前方
