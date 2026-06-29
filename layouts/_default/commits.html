@@ -2,12 +2,22 @@
 {{- /* ── Load git history data (pre-grouped by Python script) ── */ -}}
 {{- $totalCommits := 0 }}
 {{- $dateGroups := slice }}
-{{- if fileExists "data/git_history.json" }}
-  {{- $data := index hugo.Data "git_history" }}
-  {{- if $data }}
-    {{- $all := index $data "_all" | default slice }}
-    {{- $totalCommits = len $all }}
-    {{- $dateGroups = index $data "_by_date" | default slice }}
+{{- $data := index hugo.Data "git_history" | default dict }}
+{{- /* Use _site (all repo commits) for global changelog, fall back to _all/_by_date */}}
+{{- $allCommits := index $data "_site" | default (index $data "_all" | default slice) }}
+{{- $totalCommits = len $allCommits }}
+{{- /* Build date groups from flat commit list */}}
+{{- if $allCommits }}
+  {{- $byDateDict := dict }}
+  {{- range $allCommits }}
+    {{- $day := substr .date 0 10 }}
+    {{- $group := index $byDateDict $day | default slice }}
+    {{- $group = $group | append . }}
+    {{- $byDateDict = merge $byDateDict (dict $day $group) }}
+  {{- end }}
+  {{- /* Convert to sorted slice */}}
+  {{- range $day, $commits := $byDateDict }}
+    {{- $dateGroups = $dateGroups | append (dict "date" $day "commits" $commits) }}
   {{- end }}
 {{- end }}
 

@@ -26,23 +26,10 @@ OUTPUT_FILE = REPO_ROOT / "data" / "git_history.json"
 ENCODING = "utf-8"
 
 
-def git_log(relative_path: Path) -> list[dict]:
-    """Return commit list for *relative_path* (newest first)."""
-    cmd = [
-        "git", "log", "--follow",
-        "--format=%H|%an|%aI|%s",
-        "--", str(relative_path),
-    ]
-    result = subprocess.run(
-        cmd, capture_output=True, text=True, encoding=ENCODING,
-        cwd=str(REPO_ROOT), errors="replace",
-    )
-    if result.returncode != 0:
-        print(f"  WARN: git log failed for {relative_path}: {result.stderr.strip()}", file=sys.stderr)
-        return []
-
+def _parse_log(stdout: str) -> list[dict]:
+    """Parse git log output into commit list."""
     commits = []
-    for line in result.stdout.strip().splitlines():
+    for line in stdout.strip().splitlines():
         line = line.strip()
         if not line:
             continue
@@ -58,6 +45,39 @@ def git_log(relative_path: Path) -> list[dict]:
             "subject": subject.strip(),
         })
     return commits
+
+
+def git_log(relative_path: Path) -> list[dict]:
+    """Return commit list for *relative_path* (newest first)."""
+    cmd = [
+        "git", "log", "--follow",
+        "--format=%H|%an|%aI|%s",
+        "--", str(relative_path),
+    ]
+    result = subprocess.run(
+        cmd, capture_output=True, text=True, encoding=ENCODING,
+        cwd=str(REPO_ROOT), errors="replace",
+    )
+    if result.returncode != 0:
+        print(f"  WARN: git log failed for {relative_path}: {result.stderr.strip()}", file=sys.stderr)
+        return []
+    return _parse_log(result.stdout)
+
+
+def git_log_site() -> list[dict]:
+    """Return ALL commits in the repo (newest first), regardless of paths touched."""
+    cmd = [
+        "git", "log",
+        "--format=%H|%an|%aI|%s",
+    ]
+    result = subprocess.run(
+        cmd, capture_output=True, text=True, encoding=ENCODING,
+        cwd=str(REPO_ROOT), errors="replace",
+    )
+    if result.returncode != 0:
+        print(f"  WARN: git log --all failed: {result.stderr.strip()}", file=sys.stderr)
+        return []
+    return _parse_log(result.stdout)
 
 
 def build_global_index(file_commits: dict[str, list[dict]]) -> list[dict]:
@@ -125,6 +145,7 @@ def main() -> int:
     output: dict = {
         "_all": global_commits,
         "_by_date": date_groups,
+        "_site": git_log_site(),
     }
     for hugo_key, commits in file_data.items():
         output[hugo_key] = {"commits": commits}
