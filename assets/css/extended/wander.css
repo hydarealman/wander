@@ -902,6 +902,195 @@ details.toc {
 
 /* ── Document TOC (table of contents) ──────────── */
 
+/* ── Post layout: article + right TOC sidebar ──────── */
+
+.post-layout {
+  display: flex;
+  justify-content: center;
+  gap: 0;
+  max-width: 100%;
+  margin: 0 auto;
+  position: relative;
+}
+
+/* ── Content area ── */
+
+.post-content-area {
+  flex: 1 1 auto;
+  max-width: var(--main-width);
+  min-width: 0;
+  transition: max-width 0.3s ease;
+}
+
+/* When TOC is closed, let content expand */
+.post-layout[data-toc-state="closed"] .post-content-area {
+  max-width: 1200px;
+}
+
+/* When there's no TOC at all, center normally */
+.post-layout--no-toc .post-content-area {
+  max-width: var(--main-width);
+}
+
+/* ── Right TOC sidebar ── */
+
+.toc-sidebar {
+  width: 260px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 80px;
+  align-self: flex-start;
+  height: fit-content;
+  max-height: calc(100vh - 100px);
+  overflow-y: auto;
+  margin-left: 32px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--entry);
+  font-size: 13px;
+  transition: width 0.3s ease, min-width 0.3s ease, margin 0.3s ease,
+              opacity 0.3s ease, border 0.3s ease, padding 0.3s ease;
+}
+
+/* Collapsed: shrink to nothing */
+.post-layout[data-toc-state="closed"] .toc-sidebar {
+  width: 0;
+  min-width: 0;
+  margin-left: 0;
+  opacity: 0;
+  overflow: hidden;
+  border-width: 0;
+  padding: 0;
+}
+
+.toc-sidebar__header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border);
+  font-weight: 600;
+  color: var(--primary);
+  position: sticky;
+  top: 0;
+  background: var(--entry);
+  z-index: 1;
+}
+
+.toc-sidebar__title {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+}
+
+.toc-sidebar__collapse {
+  margin-left: auto;
+  background: none;
+  border: none;
+  color: var(--secondary);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.15s, background 0.15s;
+}
+.toc-sidebar__collapse:hover {
+  color: var(--wander-accent);
+  background: var(--wander-soft);
+}
+
+.toc-sidebar__nav {
+  padding: 8px 14px 12px;
+  line-height: 1.7;
+}
+
+.toc-sidebar__nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.toc-sidebar__nav li {
+  margin: 1px 0;
+}
+
+.toc-sidebar__nav a {
+  display: block;
+  padding: 3px 0;
+  color: var(--secondary);
+  text-decoration: none;
+  border-radius: 4px;
+  font-size: 13px;
+  transition: color 0.15s, padding-left 0.15s;
+}
+
+.toc-sidebar__nav a:hover,
+.toc-sidebar__nav a:focus-visible {
+  color: var(--wander-accent);
+  padding-left: 6px;
+}
+
+.toc-sidebar__nav ul ul {
+  padding-left: 14px;
+  border-left: 1px solid var(--border);
+  margin-left: 2px;
+}
+
+.toc-sidebar__nav ul ul ul {
+  padding-left: 12px;
+}
+
+/* Active heading highlight via :target or scroll-spy */
+.toc-sidebar__nav a.active {
+  color: var(--wander-accent);
+  font-weight: 500;
+}
+
+/* Scrollbar styling */
+.toc-sidebar::-webkit-scrollbar { width: 4px; }
+.toc-sidebar::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 2px;
+}
+.toc-sidebar::-webkit-scrollbar-track { background: transparent; }
+
+/* ── Floating toggle button (visible when TOC collapsed) ── */
+
+.toc-float-btn {
+  position: fixed;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--entry);
+  color: var(--secondary);
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s, color 0.15s;
+  backdrop-filter: blur(4px);
+}
+.post-layout[data-toc-state="closed"] .toc-float-btn {
+  opacity: 1;
+  pointer-events: auto;
+}
+.toc-float-btn:hover {
+  color: var(--wander-accent);
+  border-color: var(--wander-accent);
+}
+
+/* ── Backward compat: inline TOC card (for non-single pages) ── */
+
 .wander-toc {
   margin: 32px 0;
   border: 1px solid var(--border);
@@ -1396,5 +1585,99 @@ details.toc {
   .commits-card-meta {
     gap: 8px;
     font-size: 10px;
+  }
+}
+
+/* ── TOC sidebar responsive ──────────────────────── */
+
+@media screen and (max-width: 1024px) {
+  /* Collapse sidebar by default on smaller screens */
+  .post-layout {
+    justify-content: flex-start;
+  }
+
+  .toc-sidebar {
+    width: 0;
+    min-width: 0;
+    margin-left: 0;
+    opacity: 0;
+    overflow: hidden;
+    border-width: 0;
+    padding: 0;
+  }
+
+  .post-layout[data-toc-state="open"] .toc-sidebar {
+    width: 250px;
+    min-width: 250px;
+    margin-left: 24px;
+    opacity: 1;
+    border-width: 1px;
+    padding: 0;
+  }
+
+  .post-layout[data-toc-state="open"] .toc-sidebar__nav {
+    padding: 8px 14px 12px;
+  }
+
+  .post-content-area {
+    flex: 1 1 auto;
+  }
+
+  .toc-float-btn {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .post-layout[data-toc-state="open"] .toc-float-btn {
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .post-layout {
+    display: block;
+    position: relative;
+  }
+
+  .post-layout[data-toc-state="open"] .toc-sidebar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 280px;
+    min-width: 280px;
+    height: 100vh;
+    max-height: 100vh;
+    margin-left: 0;
+    z-index: 100;
+    border-radius: 0;
+    border-right: none;
+    border-top: none;
+    border-bottom: none;
+    overflow-y: auto;
+    box-shadow: -4px 0 24px rgba(0, 0, 0, 0.3);
+  }
+
+  .post-layout[data-toc-state="closed"] .toc-sidebar {
+    display: none;
+  }
+
+  /* Backdrop overlay behind mobile TOC */
+  .toc-mobile-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 99;
+  }
+  .post-layout[data-toc-state="open"] .toc-mobile-backdrop {
+    display: block;
+  }
+
+  .toc-float-btn {
+    right: 8px;
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
   }
 }
