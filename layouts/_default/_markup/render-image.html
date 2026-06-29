@@ -1,0 +1,7 @@
+{{- /* Markdown image render hook — fixes /images/ paths for subpath deployments */ -}}
+{{- $src := .Destination -}}
+{{- $isRemote := or (hasPrefix $src "http://") (hasPrefix $src "https://") (hasPrefix $src "//") -}}
+{{- if and (not $isRemote) (hasPrefix $src "/") -}}
+  {{- $src = absURL (strings.TrimPrefix "/" $src) -}}
+{{- end -}}
+<img src="{{ $src | safeURL }}" alt="{{ .Text }}"{{ with .Title }} title="{{ . }}"{{ end }} loading="lazy">
