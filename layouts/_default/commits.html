@@ -15,10 +15,11 @@
     {{- $group = $group | append . }}
     {{- $byDateDict = merge $byDateDict (dict $day $group) }}
   {{- end }}
-  {{- /* Convert to sorted slice */}}
+  {{- /* Convert to sorted slice (newest first) */}}
   {{- range $day, $commits := $byDateDict }}
     {{- $dateGroups = $dateGroups | append (dict "date" $day "commits" $commits) }}
   {{- end }}
+  {{- $dateGroups = collections.Reverse $dateGroups }}
 {{- end }}
 
 <header class="page-header">
