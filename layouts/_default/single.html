@@ -153,6 +153,72 @@
   const saved = (() => { try { return localStorage.getItem(STORAGE_KEY); } catch (_) { return null; } })();
   if (saved === '0') apply(false);
 
+  // ── Build collapsible heading tree ──
+  const tocNav = sidebar.querySelector('.toc-sidebar__nav');
+  if (tocNav) {
+    // Walk all top-level <li> elements recursively
+    const buildCollapsible = (ul) => {
+      if (!ul || !ul.children) return;
+      Array.from(ul.children).forEach((li) => {
+        if (li.tagName !== 'LI') return;
+        const childUl = li.querySelector(':scope > ul');
+        const link = li.querySelector(':scope > a');
+
+        if (link) {
+          // Wrap link + toggle in .toc-row
+          const row = document.createElement('div');
+          row.className = 'toc-row';
+
+          // Create toggle button
+          const toggleBtn = document.createElement('button');
+          toggleBtn.className = 'toc-toggle';
+          toggleBtn.type = 'button';
+          toggleBtn.setAttribute('aria-label', '展开/折叠子标题');
+          toggleBtn.innerHTML = '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>';
+
+          if (childUl && childUl.children.length > 0) {
+            li.classList.add('has-children');
+            toggleBtn.addEventListener('click', (e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              li.classList.toggle('collapsed');
+              // Persist collapsed state
+              try {
+                const href = link.getAttribute('href');
+                if (href) {
+                  const key = 'wander:toc:collapse:' + href;
+                  localStorage.setItem(key, li.classList.contains('collapsed') ? '1' : '0');
+                }
+              } catch (_) {}
+            });
+          } else {
+            toggleBtn.classList.add('toc-toggle--placeholder');
+          }
+
+          // Move link into row
+          li.insertBefore(row, li.firstChild);
+          row.appendChild(toggleBtn);
+          row.appendChild(link);
+
+          // Restore saved collapse state
+          try {
+            const href = link.getAttribute('href');
+            if (href) {
+              const key = 'wander:toc:collapse:' + href;
+              if (localStorage.getItem(key) === '1') li.classList.add('collapsed');
+            }
+          } catch (_) {}
+
+          // Recurse into nested <ul>
+          if (childUl) buildCollapsible(childUl);
+        }
+      });
+    };
+
+    const rootUl = tocNav.querySelector(':scope > ul');
+    if (rootUl) buildCollapsible(rootUl);
+  }
+
   // Track which headings are visible for scroll spy
   const tocLinks = sidebar.querySelectorAll('.toc-sidebar__nav a[href^="#"]');
   if (tocLinks.length && 'IntersectionObserver' in window) {
