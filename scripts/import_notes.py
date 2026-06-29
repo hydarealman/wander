@@ -5,7 +5,7 @@ import re
 
 SOURCE_DIR = Path(r"D:\notes")
 DEST_DIR = Path(r"D:\wander\content\posts")
-STATIC_MEDIA_DIR = Path(r"D:\wander\static\media")
+STATIC_MEDIA_DIR = Path(r"D:\wander\static\images\feishu")
 
 FRONT_MATTER_RE = re.compile(r"\A(?:---|\+\+\+)\s*\n.*?\n(?:---|\+\+\+)\s*\n?", re.S)
 HEADING_RE = re.compile(r"^\s*#\s+(.+?)\s*#*\s*$", re.M)
@@ -170,7 +170,7 @@ def copy_local_image(markdown_path: Path, relative_markdown_path: Path, raw_targ
     destination = media_subdir / source_image.name
     destination.write_bytes(source_image.read_bytes())
 
-    url_path = destination.relative_to(STATIC_MEDIA_DIR.parent).as_posix()
+    url_path = destination.relative_to(STATIC_MEDIA_DIR.parent.parent).as_posix()
     return "/" + url_path
 
 
