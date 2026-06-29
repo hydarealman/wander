@@ -1,16 +1,14 @@
-{{- /* Commit history timeline widget. Uses data from generate_git_history.py via .Site.Data.git_history. */ -}}
-{{- if eq .Type "posts" }}
+{{- /* Commit history timeline widget. Uses data from generate_git_history.py via hugo.Data.git_history. */ -}}
+{{- if and (eq .Type "posts") .File }}
   {{- $gitData := dict }}
-  {{- if fileExists "data/git_history.json" }}
-    {{- $loaded := index hugo.Data "git_history" }}
-    {{- if $loaded }}
-      {{- $gitData = $loaded }}
-    {{- end }}
+  {{- with index hugo.Data "git_history" }}
+    {{- $gitData = . }}
   {{- end }}
-  {{- $fileKey := .File.Path }}
+  {{- /* Normalize path separator: .File.Path uses \ on Windows but data keys use / */}}
+  {{- $fileKey := replace .File.Path "\\" "/" }}
   {{- $fileEntry := index $gitData $fileKey | default (dict "commits" slice) }}
   {{- $commits := $fileEntry.commits }}
-  {{- if and $commits (gt (len $commits) 1) }}
+  {{- if $commits }}
   <section class="post-githistory">
     <details>
       <summary>
@@ -32,7 +30,7 @@
           </li>
           {{- end }}
         </ol>
-        <a class="post-githistory-full" href="https://github.com/hydarealman/wander/commits/main/content/{{ .File.Path }}" target="_blank" rel="noopener">
+        <a class="post-githistory-full" href="https://github.com/hydarealman/wander/commits/main/content/{{ $fileKey }}" target="_blank" rel="noopener">
           在 GitHub 上查看完整历史
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
         </a>
