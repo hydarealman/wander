@@ -45,6 +45,7 @@
 /* ── Sunset pixel-art landscape background ───── */
 
 html {
+  min-height: 100vh;
   background:
     /* light overlay for text readability — just a subtle darkening at bottom */
     linear-gradient(0deg,
@@ -136,6 +137,7 @@ body.list,
   padding-top: 18px;
   position: relative;
   z-index: 1;
+  background: none;
 }
 
 /* ── Black Hole — preserved for future restoration ─
@@ -604,6 +606,10 @@ body.list,
 
 /* ── Post content ────────────────────────────── */
 
+.post-single {
+  background: transparent;
+}
+
 .post-content { font-size: 16px; line-height: 1.82; }
 
 .post-content h2,
@@ -911,6 +917,7 @@ details.toc {
   max-width: 100%;
   margin: 0 auto;
   position: relative;
+  background: transparent;
 }
 
 /* ── Content area ── */
@@ -919,6 +926,7 @@ details.toc {
   flex: 1 1 auto;
   max-width: var(--main-width);
   min-width: 0;
+  background: transparent;
   transition: max-width 0.3s ease;
 }
 
